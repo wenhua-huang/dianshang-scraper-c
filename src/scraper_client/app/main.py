@@ -1,0 +1,55 @@
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+from scraper_client.core.logging import configure_logging
+from scraper_client.core.settings import get_settings
+from scraper_client.services.account_orchestrator import AccountOrchestrator
+
+
+def _setup_migration_import_path() -> None:
+    # Migration bridge: allow importing old jd_scraper extraction modules from sibling repo.
+    current = Path(__file__).resolve()
+    root = current.parents[3]  # dianshang-scraper-c/
+    jd_src = root.parent / "jd-scraper" / "src"
+    if jd_src.exists():
+        sys.path.insert(0, str(jd_src))
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="dianshang scraper client")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    start = sub.add_parser("start", help="Run continuously and execute active accounts")
+    start.add_argument("--poll-interval", type=int, default=None, help="Override poll interval seconds")
+    start.add_argument("--empty-backoff", type=int, default=None, help="Override empty queue backoff seconds")
+
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    _setup_migration_import_path()
+    args = build_parser().parse_args(argv)
+
+    settings = get_settings()
+    if args.command == "start":
+        if args.poll_interval is not None:
+            settings.poll_interval_seconds = max(1, args.poll_interval)
+        if args.empty_backoff is not None:
+            settings.empty_queue_backoff_seconds = max(1, args.empty_backoff)
+    settings.validate()
+    configure_logging(settings.log_level)
+
+    if args.command == "start":
+        orchestrator = AccountOrchestrator(settings)
+        orchestrator.register_signal_handlers()
+        orchestrator.run_forever()
+        return 0
+
+    return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
