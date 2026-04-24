@@ -1,0 +1,64 @@
+name: Build Windows Executable
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+
+      - name: Extract version
+        shell: pwsh
+        run: |
+          $version = python -c "import re, pathlib; text = pathlib.Path('pyproject.toml').read_text(encoding='utf-8'); m = re.search(r'^version\s*=\s*\"([^\"]+)\"', text, re.M); print(m.group(1) if m else '')"
+          if (-not $version) { throw 'Failed to parse version from pyproject.toml' }
+          "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Build executable
+        shell: pwsh
+        run: |
+          pyinstaller --onefile --name scraper-client src/scraper_client/app/main.py --distpath ./dist --buildpath ./build
+
+      - name: Stage package
+        shell: pwsh
+        run: |
+          $pkgDir = "staging/scraper-client-$env:VERSION-windows-x86_64"
+          New-Item -ItemType Directory -Force -Path $pkgDir | Out-Null
+          Copy-Item -Path "dist/scraper-client.exe" -Destination "$pkgDir/scraper-client.exe" -Force
+
+      - name: Smoke check
+        shell: pwsh
+        run: |
+          $exe = "./staging/scraper-client-$env:VERSION-windows-x86_64/scraper-client.exe"
+          & $exe --help
+
+      - name: Archive package
+        shell: pwsh
+        run: |
+          $zipName = "scraper-client-$env:VERSION-windows-x86_64.zip"
+          Compress-Archive -Path "staging/scraper-client-$env:VERSION-windows-x86_64" -DestinationPath $zipName -Force
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-client-${{ env.VERSION }}-windows-x86_64
+          path: scraper-client-${{ env.VERSION }}-windows-x86_64.zip
+          if-no-files-found: error
