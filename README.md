@@ -34,6 +34,7 @@ Behavior:
 - The client runs continuously.
 - Each cycle pulls active accounts from backend and executes them.
 - Platform is decided by each account's platform field.
+- CDP connection is enabled by default: it first tries `PLAYWRIGHT_CDP_URL`; if unreachable, it auto-discovers local Chrome CDP endpoints and then auto-starts Chrome when needed.
 - Stop with Ctrl+C or SIGTERM; the current account is finalized before exit.
 
 ## Release
