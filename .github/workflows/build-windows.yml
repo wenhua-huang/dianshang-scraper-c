@@ -31,7 +31,7 @@ jobs:
       - name: Extract version
         shell: pwsh
         run: |
-          $version = python -c "import re, pathlib; text = pathlib.Path('pyproject.toml').read_text(encoding='utf-8'); m = re.search(r'^version\s*=\s*\"([^\"]+)\"', text, re.M); print(m.group(1) if m else '')"
+          $version = python -c 'from pathlib import Path; import tomllib; print(tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])'
           if (-not $version) { throw 'Failed to parse version from pyproject.toml' }
           "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
