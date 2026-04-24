@@ -67,3 +67,15 @@ Package layout in artifact:
 ```powershell
 .\staging\scraper-client-{version}-windows-x86_64\scraper-client.exe start
 ```
+
+You can also double-click `scraper-client.exe` directly. If no CLI arguments are provided,
+the client now defaults to `start` mode.
+
+Runtime logs are written to:
+
+```text
+./logs/{SCRAPER_CLIENT_ID}.log
+```
+
+When launched by double-click with no arguments, startup failures will show a prompt and wait
+for Enter before the window closes, so error details are visible.
