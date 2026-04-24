@@ -8,6 +8,7 @@ from decimal import Decimal
 from typing import Any
 
 from scraper_client.core.settings import Settings
+from scraper_client.infra.browser.chrome_discovery import ChromeCdpResolver
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +34,11 @@ def _amount_to_cent(value: Decimal | None, raw_text: str | None) -> int:
 class ScrapeExecutor:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
+        self._cdp_resolver = ChromeCdpResolver(
+            preferred_url=settings.playwright_cdp_url,
+            timeout_ms=settings.playwright_timeout_ms,
+            client_id=settings.scraper_client_id,
+        )
 
     def execute_account(
         self,
@@ -150,7 +156,7 @@ class ScrapeExecutor:
         # Bridge settings from new client env to old extractor settings at runtime.
         jd_settings = get_jd_settings()
         jd_settings.playwright_connect_over_cdp = True
-        jd_settings.playwright_cdp_url = self.settings.playwright_cdp_url
+        jd_settings.playwright_cdp_url = self._cdp_resolver.resolve()
         jd_settings.playwright_timeout_ms = self.settings.playwright_timeout_ms
         # Apply server-delivered behavioral params
         if scrape_config:
