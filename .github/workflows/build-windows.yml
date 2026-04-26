@@ -46,12 +46,19 @@ jobs:
           $pkgDir = "staging/scraper-client-$env:VERSION-windows-x86_64"
           New-Item -ItemType Directory -Force -Path $pkgDir | Out-Null
           Copy-Item -Path "dist/scraper-client.exe" -Destination "$pkgDir/scraper-client.exe" -Force
+          Copy-Item -Path ".env.example" -Destination "$pkgDir/.env.example" -Force
+          Copy-Item -Path "scripts/start.bat" -Destination "$pkgDir/start.bat" -Force
 
       - name: Smoke check
         shell: pwsh
         run: |
           $exe = "./staging/scraper-client-$env:VERSION-windows-x86_64/scraper-client.exe"
           & $exe --help
+          $env:SCRAPER_SERVER_BASE_URL = "http://127.0.0.1:8000/api/v1"
+          $env:SCRAPER_INTERNAL_API_KEY = "ci-smoke-key"
+          $env:PLAYWRIGHT_CDP_URL = "http://127.0.0.1:9222"
+          $env:SCRAPER_SKIP_BACKEND_CHECK = "1"
+          cmd /c "staging\scraper-client-$env:VERSION-windows-x86_64\start.bat --check-only"
 
       - name: Archive package
         shell: pwsh

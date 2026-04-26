@@ -3,22 +3,12 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
-from pathlib import Path
 
 from scraper_client.core.logging import configure_logging
 from scraper_client.core.settings import get_settings
 from scraper_client.services.account_orchestrator import AccountOrchestrator
 
 logger = logging.getLogger(__name__)
-
-
-def _setup_migration_import_path() -> None:
-    # Migration bridge: allow importing old jd_scraper extraction modules from sibling repo.
-    current = Path(__file__).resolve()
-    root = current.parents[3]  # dianshang-scraper-c/
-    jd_src = root.parent / "jd-scraper" / "src"
-    if jd_src.exists():
-        sys.path.insert(0, str(jd_src))
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -49,7 +39,6 @@ def _pause_before_exit() -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    _setup_migration_import_path()
     normalized_argv, auto_started = _prepare_argv(argv)
     args = build_parser().parse_args(normalized_argv)
     if args.command is None:

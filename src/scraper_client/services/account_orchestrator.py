@@ -100,6 +100,7 @@ class AccountOrchestrator:
                 scrape_config={
                     "human_action_min_ms": account.human_action_min_ms,
                     "human_action_max_ms": account.human_action_max_ms,
+                    "scrape_max_pages": account.scrape_max_pages,
                     "max_pages": account.scrape_max_pages,
                 },
             )
@@ -174,6 +175,7 @@ class AccountOrchestrator:
                 scrape_config={
                     "human_action_min_ms": task.get("human_action_min_ms", 1000),
                     "human_action_max_ms": task.get("human_action_max_ms", 5000),
+                    "scrape_max_pages": task.get("scrape_max_pages", 10),
                     "max_pages": task.get("scrape_max_pages", 10),
                 },
             )
