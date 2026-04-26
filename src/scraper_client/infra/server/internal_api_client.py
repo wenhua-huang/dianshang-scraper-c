@@ -80,6 +80,19 @@ class InternalApiClient:
                 return None
             raise
 
+    def create_verification_session(self, account_id: int, source: str = "SCRAPER") -> dict[str, Any]:
+        payload = {
+            "account_id": account_id,
+            "source": source,
+        }
+        return self._request_json("POST", "/shops/internal/verification-sessions", payload)
+
+    def get_verification_status(self, request_id: str) -> dict[str, Any]:
+        return self._request_json("GET", f"/shops/internal/verification-sessions/{request_id}")
+
+    def consume_verification_code(self, request_id: str) -> dict[str, Any]:
+        return self._request_json("POST", f"/shops/internal/verification-sessions/{request_id}/consume", {})
+
     def _request_json(
         self,
         method: str,

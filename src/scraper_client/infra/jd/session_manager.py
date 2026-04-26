@@ -37,12 +37,20 @@ class JDSessionManager:
         cdp_url = self._resolver.resolve()
         playwright = sync_playwright().start()
         browser = playwright.chromium.connect_over_cdp(cdp_url, timeout=self._settings.playwright_timeout_ms)
-        context = browser.contexts[0] if browser.contexts else browser.new_context()
+        # Always create an isolated context per account to avoid cookie/state pollution.
+        context = browser.new_context()
 
         storage_state_path = Path("artifacts") / "storage" / f"jd_account_{account_id}.json"
-        self._load_storage_state(context, storage_state_path)
+        if self._settings.force_relogin_each_run:
+            logger.info(
+                "force_relogin_each_run enabled, skip loading storage state account_id=%s",
+                account_id,
+            )
+        else:
+            self._load_storage_state(context, storage_state_path)
 
-        page = context.pages[0] if context.pages else context.new_page()
+        page = context.new_page()
+        logger.info("opened isolated JD browser session account_id=%s storage_state=%s", account_id, storage_state_path)
         return JDBrowserSession(
             playwright=playwright,
             browser=browser,
@@ -54,6 +62,10 @@ class JDSessionManager:
     def close_session(self, session: JDBrowserSession, *, persist_state: bool = True) -> None:
         if persist_state:
             self._save_storage_state(session.context, session.storage_state_path)
+        try:
+            session.context.close()
+        except Exception:
+            logger.debug("failed to close browser context", exc_info=True)
         try:
             session.browser.close()
         except Exception:

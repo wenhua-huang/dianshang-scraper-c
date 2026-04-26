@@ -8,7 +8,7 @@ from scraper_client.core.settings import Settings
 from scraper_client.domain.models import ScrapeConfig, ShopAccountInfo
 from scraper_client.infra.jd.authenticator import JDAuthenticator
 from scraper_client.infra.jd.detail_extractor import JDDetailExtractor
-from scraper_client.infra.jd.exceptions import JDParseError, JDScraperError
+from scraper_client.infra.jd.exceptions import JDParseError, JDScraperError, JDSessionExpiredError
 from scraper_client.infra.jd.order_list_extractor import JDOrderListExtractor
 from scraper_client.infra.jd.response_parser import parse_item, parse_order, parse_price_info
 from scraper_client.infra.jd.session_manager import JDSessionManager
@@ -68,20 +68,20 @@ class JDScraper:
             runtime_cfg["scrape_max_pages"],
         )
 
+        account_payload = account if isinstance(account, dict) else account.__dict__
         session = self._session_manager.open_session(int(account_id))
         try:
             self._authenticator.ensure_authenticated(
                 session,
-                account=account if isinstance(account, dict) else account.__dict__,
+                account=account_payload,
                 allow_manual_login=True,
                 wait_timeout_seconds=max(90, runtime_cfg["human_action_max_ms"] // 10),
             )
 
-            raw_orders = self._list_extractor.extract(
-                session.page,
-                max_pages=runtime_cfg["scrape_max_pages"],
-                human_action_min_ms=runtime_cfg["human_action_min_ms"],
-                human_action_max_ms=runtime_cfg["human_action_max_ms"],
+            raw_orders = self._extract_with_reauth_retry(
+                session=session,
+                account=account_payload,
+                runtime_cfg=runtime_cfg,
             )
             enriched_orders = self._detail_extractor.enrich(raw_orders)
             orders, items, price_info = self._parse_raw_orders(enriched_orders)
@@ -103,6 +103,42 @@ class JDScraper:
             raise JDScraperError(str(exc)) from exc
         finally:
             self._session_manager.close_session(session, persist_state=True)
+
+    def _extract_with_reauth_retry(
+        self,
+        *,
+        session,
+        account: dict[str, Any],
+        runtime_cfg: dict[str, int],
+    ) -> list[dict[str, Any]]:
+        try:
+            return self._list_extractor.extract(
+                session.page,
+                max_pages=runtime_cfg["scrape_max_pages"],
+                human_action_min_ms=runtime_cfg["human_action_min_ms"],
+                human_action_max_ms=runtime_cfg["human_action_max_ms"],
+            )
+        except JDSessionExpiredError:
+            logger.warning(
+                "jd session expired during list extraction, re-authenticating in same round account_id=%s",
+                account.get("id"),
+            )
+            self._authenticator.ensure_authenticated(
+                session,
+                account=account,
+                allow_manual_login=True,
+                wait_timeout_seconds=max(90, runtime_cfg["human_action_max_ms"] // 10),
+            )
+            logger.info(
+                "re-authentication completed, retrying list extraction account_id=%s",
+                account.get("id"),
+            )
+            return self._list_extractor.extract(
+                session.page,
+                max_pages=runtime_cfg["scrape_max_pages"],
+                human_action_min_ms=runtime_cfg["human_action_min_ms"],
+                human_action_max_ms=runtime_cfg["human_action_max_ms"],
+            )
 
     def _parse_raw_orders(
         self, raw_orders: list[dict[str, Any]]

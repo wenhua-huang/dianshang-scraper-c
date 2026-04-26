@@ -1,0 +1,6 @@
+2026-04-27 00:34:12,508 INFO scraper_client.infra.browser.chrome_discovery - CDP endpoint resolved: http://127.0.0.1:9222
+2026-04-27 00:34:13,351 INFO scraper_client.infra.jd.session_manager - opened isolated JD browser session account_id=1 storage_state=artifacts/storage/jd_account_1.json
+2026-04-27 00:34:23,844 INFO probe_jd_list_page - probe report saved path=artifacts/debug/jd_probe/account_1_1777221252/report.json
+2026-04-27 00:35:44,683 INFO scraper_client.infra.browser.chrome_discovery - CDP endpoint resolved: http://127.0.0.1:9222
+2026-04-27 00:35:45,529 INFO scraper_client.infra.jd.session_manager - opened isolated JD browser session account_id=2 storage_state=artifacts/storage/jd_account_2.json
+2026-04-27 00:35:51,989 INFO probe_jd_list_page - probe report saved path=artifacts/debug/jd_probe/account_2_1777221344/report.json

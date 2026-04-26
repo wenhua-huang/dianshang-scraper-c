@@ -17,6 +17,7 @@ class Settings(BaseSettings):
 
     playwright_cdp_url: str = Field(default="http://127.0.0.1:9222")
     playwright_timeout_ms: int = Field(default=20000)
+    force_relogin_each_run: bool = Field(default=False)
 
     poll_interval_seconds: int = Field(default=30, ge=1)
     empty_queue_backoff_seconds: int = Field(default=30, ge=1)
@@ -29,6 +30,10 @@ class Settings(BaseSettings):
     smtp_username: str = Field(default="")
     smtp_password: str = Field(default="")
     smtp_from: str = Field(default="")
+    captcha_alert_cooldown_seconds: int = Field(default=600, ge=0)
+
+    verification_poll_interval_seconds: float = Field(default=3.0, ge=0.5)
+    verification_max_wait_seconds: int = Field(default=180, ge=10)
 
     def validate(self) -> None:
         if self.retry_backoff_max_seconds < self.empty_queue_backoff_seconds:

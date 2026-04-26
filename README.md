@@ -16,8 +16,43 @@ CDP-only scraper client for the dianshang backend internal scraper APIs.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e .[dev]
+pip install -e '.[dev]'
 ```
+
+## 本地启动（macOS/Linux）
+
+1. 准备环境变量：
+
+```bash
+cp .env.example .env
+```
+
+编辑 `.env`，至少确认以下值：
+
+- `SCRAPER_SERVER_BASE_URL`
+- `SCRAPER_INTERNAL_API_KEY`
+- `SCRAPER_CLIENT_ID`
+- `PLAYWRIGHT_CDP_URL`
+
+2. 启动带远程调试端口的 Chrome（示例端口 9222）：
+
+```bash
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+```
+
+3. 启动客户端（持续轮询任务）：
+
+```bash
+.venv/bin/scraper-client start
+```
+
+也可以用模块方式启动：
+
+```bash
+.venv/bin/python -m scraper_client.app.main start
+```
+
+说明：当可执行程序在“无命令行参数”启动时，会默认进入 `start` 模式。
 
 ### Required environment variables
 
@@ -124,3 +159,7 @@ This behavior is implemented in `AccountOrchestrator.execute_task` and keeps bac
 4. `orders extracted but items/price_info empty`
 	- Keep browser on JD order pages and avoid extensions blocking network requests.
 	- Increase `scrape_max_pages` from backend account config.
+5. `ModuleNotFoundError: No module named 'scraper_client'`
+	- Usually caused by using a global binary like `/opt/homebrew/bin/scraper-client` instead of this project's virtualenv.
+	- Re-activate venv and reinstall: `source .venv/bin/activate && pip install -e '.[dev]'`.
+	- Verify binary path: `which scraper-client` should point to `.venv/bin/scraper-client`.
