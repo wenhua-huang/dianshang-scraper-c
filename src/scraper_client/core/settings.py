@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     max_retry_attempts: int = Field(default=20, ge=1)
     retry_backoff_max_seconds: int = Field(default=300, ge=1)
 
+    # SMTP email notification settings (optional, leave empty to disable)
+    smtp_host: str = Field(default="")
+    smtp_port: int = Field(default=465)
+    smtp_username: str = Field(default="")
+    smtp_password: str = Field(default="")
+    smtp_from: str = Field(default="")
+
     def validate(self) -> None:
         if self.retry_backoff_max_seconds < self.empty_queue_backoff_seconds:
             raise ValueError("retry_backoff_max_seconds must be >= empty_queue_backoff_seconds")

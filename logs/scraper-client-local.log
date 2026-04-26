@@ -1,0 +1,1692 @@
+2026-04-26 21:18:32,856 INFO __main__ - scraper-client starting command=start client_id=scraper-client-local
+2026-04-26 21:18:32,856 INFO __main__ - detected no CLI args, defaulted to 'start' mode
+2026-04-26 21:18:32,856 INFO __main__ - log file: /Users/huangwenhua/company/安洋/dianshang-scraper-c/logs/scraper-client-local.log
+2026-04-26 21:18:32,884 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:18:42,909 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:18:52,933 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:19:02,959 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:19:12,979 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:19:23,007 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:19:33,034 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:19:43,071 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:19:53,101 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:20:03,140 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:20:13,163 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:20:23,187 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:20:33,215 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:20:43,243 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:20:53,283 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:21:03,304 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:21:13,327 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:21:23,347 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:21:33,368 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:21:43,391 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:21:53,413 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:22:03,447 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:22:13,484 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:22:23,524 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:22:33,558 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:22:43,579 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:22:53,593 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:23:03,611 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:23:13,630 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:23:13,632 INFO scraper_client.infra.browser.chrome_discovery - CDP endpoint resolved: http://127.0.0.1:9222
+2026-04-26 21:23:23,187 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18407 pages=1)
+2026-04-26 21:23:23,188 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:23:23,189 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:23:23,378 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=8
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:22:49Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480202014912545', 'openid': 'wdjDWUTuMXLoua', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '暘**', 'receiver_phone': '1******9958', 'receiver_address': '湖南常德市桃源县**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:22:49Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"wdjDWUTuMXLoua\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\uf ... (3380 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:23:53,439 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:24:03,466 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:24:13,485 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:24:23,519 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:24:32,905 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18409 pages=1)
+2026-04-26 21:24:32,906 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:24:32,906 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:24:33,121 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=9
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:24:20Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480287014894231', 'openid': 'jd_TsasZripalOX', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '关**', 'receiver_phone': '1******4260', 'receiver_address': '辽宁辽阳市白塔区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:24:20Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_TsasZripalOX\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\u ... (3380 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:25:03,184 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:25:12,138 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18409 pages=1)
+2026-04-26 21:25:12,139 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:25:12,142 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:25:12,391 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=10
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:24:20Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480287014894231', 'openid': 'jd_TsasZripalOX', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '关**', 'receiver_phone': '1******4260', 'receiver_address': '辽宁辽阳市白塔区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:24:20Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_TsasZripalOX\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\u ... (3380 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:25:42,423 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:25:51,599 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18409 pages=1)
+2026-04-26 21:25:51,602 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:25:51,603 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:25:51,823 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=11
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:24:20Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480287014894231', 'openid': 'jd_TsasZripalOX', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '关**', 'receiver_phone': '1******4260', 'receiver_address': '辽宁辽阳市白塔区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:24:20Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_TsasZripalOX\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\u ... (3380 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:26:21,857 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:26:28,992 INFO scraper_client.app.main - scraper-client starting command=start client_id=scraper-client-local
+2026-04-26 21:26:28,992 INFO scraper_client.app.main - log file: /Users/huangwenhua/company/安洋/dianshang-scraper-c/logs/scraper-client-local.log
+2026-04-26 21:26:29,007 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:26:31,870 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:26:39,026 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:26:41,884 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:26:49,045 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:26:51,899 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:26:59,062 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:27:01,909 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:27:09,083 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:27:09,084 INFO scraper_client.infra.browser.chrome_discovery - CDP endpoint resolved: http://127.0.0.1:9222
+2026-04-26 21:27:11,925 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:27:18,455 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18412 pages=1)
+2026-04-26 21:27:18,455 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:27:18,456 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:27:18,652 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=12
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:27:02Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480215007411792', 'openid': 'wdPGaGzemIoIdB', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '余**', 'receiver_phone': '1******3336', 'receiver_address': '安徽宣城市广德市**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:27:02Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"wdPGaGzemIoIdB\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\uf ... (3380 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:27:21,969 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:27:30,816 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18412 pages=1)
+2026-04-26 21:27:30,817 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:27:30,817 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:27:31,006 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=13
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:27:02Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480215007411792', 'openid': 'wdPGaGzemIoIdB', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '余**', 'receiver_phone': '1******3336', 'receiver_address': '安徽宣城市广德市**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:27:02Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"wdPGaGzemIoIdB\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\uf ... (3380 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:27:48,707 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:27:57,515 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18412 pages=1)
+2026-04-26 21:27:57,516 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:27:57,516 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:27:57,678 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=14
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:27:02Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480215007411792', 'openid': 'wdPGaGzemIoIdB', 'status': '8', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '余**', 'receiver_phone': '1******3336', 'receiver_address': '安徽宣城市广德市**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:27:02Z', 'platform_update_time': '2026-04-26T13:27:37Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480215007411792\", \"orderCreateTime\": 1777 ... (4152 characters truncated) ... 59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 59.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:28:01,049 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:28:09,836 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18412 pages=1)
+2026-04-26 21:28:09,837 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:28:09,837 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:28:10,012 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=14
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:27:02Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480215007411792', 'openid': 'wdPGaGzemIoIdB', 'status': '8', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '余**', 'receiver_phone': '1******3336', 'receiver_address': '安徽宣城市广德市**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:27:02Z', 'platform_update_time': '2026-04-26T13:27:37Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480215007411792\", \"orderCreateTime\": 1777 ... (4152 characters truncated) ... 59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 59.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:28:27,721 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:28:36,764 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18413 pages=1)
+2026-04-26 21:28:36,766 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:28:36,767 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:28:36,965 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=15
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:28:10Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480223006463780', 'openid': 'jd_KNZMzxRTgIau', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '苏**', 'receiver_phone': '1******4798', 'receiver_address': '辽宁沈阳市铁西区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:28:10Z', 'platform_update_time': '2026-04-26T13:28:20Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480223006463780\", \"orderCreateTime\": 1777 ... (4180 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:28:40,053 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:28:48,800 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18413 pages=1)
+2026-04-26 21:28:48,802 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:28:48,802 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:28:49,007 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=16
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:28:10Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480223006463780', 'openid': 'jd_KNZMzxRTgIau', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '苏**', 'receiver_phone': '1******4798', 'receiver_address': '辽宁沈阳市铁西区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:28:10Z', 'platform_update_time': '2026-04-26T13:28:20Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480223006463780\", \"orderCreateTime\": 1777 ... (4180 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:29:07,021 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:29:16,164 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18413 pages=1)
+2026-04-26 21:29:16,166 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:29:16,167 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:29:16,374 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=17
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:28:10Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480223006463780', 'openid': 'jd_KNZMzxRTgIau', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '苏**', 'receiver_phone': '1******4798', 'receiver_address': '辽宁沈阳市铁西区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:28:10Z', 'platform_update_time': '2026-04-26T13:28:20Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480223006463780\", \"orderCreateTime\": 1777 ... (4180 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:29:19,056 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:29:27,987 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18414 pages=1)
+2026-04-26 21:29:27,987 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:29:27,988 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:29:28,187 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=17
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:29:13Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480242005568772', 'openid': 'wdUycVdLSyrSkc', 'status': '2', 'total_amount': 15980, 'product_count': 1, 'receiver_name': '纪**', 'receiver_phone': '1******0109', 'receiver_address': '广东惠州市惠阳区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:29:13Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"wdUycVdLSyrSkc\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\uf ... (3410 characters truncated) ... 59.8, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 159.8, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:29:46,401 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:29:56,431 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:29:58,216 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:30:05,226 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18414 pages=1)
+2026-04-26 21:30:05,226 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:30:05,227 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:30:05,418 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=18
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:29:13Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480242005568772', 'openid': 'wdUycVdLSyrSkc', 'status': '8', 'total_amount': 15980, 'product_count': 1, 'receiver_name': '纪**', 'receiver_phone': '1******0109', 'receiver_address': '广东惠州市惠阳区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:29:13Z', 'platform_update_time': '2026-04-26T13:29:22Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480242005568772\", \"orderCreateTime\": 1777 ... (4183 characters truncated) ... .8, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 159.8, \"commission\": 0.0, \"orderSum\": 159.8, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:30:08,251 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:30:17,069 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18415 pages=1)
+2026-04-26 21:30:17,071 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:30:17,072 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:30:17,241 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=19
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:30:07Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480223018783842', 'openid': '元视野', 'status': '2', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '侯**', 'receiver_phone': '1******7719', 'receiver_address': '北京海淀区青龙桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:30:07Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"\\\\u5143\\\\u89c6\\\\u91ce\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6 ... (3424 characters truncated) ...  79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:30:35,463 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:30:45,502 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:30:47,264 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:30:54,262 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18415 pages=1)
+2026-04-26 21:30:54,263 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:30:54,263 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:30:54,458 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=20
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:30:07Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480223018783842', 'openid': '元视野', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '侯**', 'receiver_phone': '1******7719', 'receiver_address': '北京海淀区青龙桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:30:07Z', 'platform_update_time': '2026-04-26T13:30:39Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480223018783842\", \"orderCreateTime\": 1777 ... (3287 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:30:57,276 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:31:06,026 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18415 pages=1)
+2026-04-26 21:31:06,027 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:31:06,028 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:31:06,243 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=20
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:30:07Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480223018783842', 'openid': '元视野', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '侯**', 'receiver_phone': '1******7719', 'receiver_address': '北京海淀区青龙桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:30:07Z', 'platform_update_time': '2026-04-26T13:30:39Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480223018783842\", \"orderCreateTime\": 1777 ... (4196 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:31:08,563 INFO scraper_client.services.account_orchestrator - received signal=2, will stop after current account
+2026-04-26 21:31:36,300 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:31:45,578 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18415 pages=1)
+2026-04-26 21:31:45,579 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:31:45,579 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:31:45,770 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=21
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:30:07Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480223018783842', 'openid': '元视野', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '侯**', 'receiver_phone': '1******7719', 'receiver_address': '北京海淀区青龙桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:30:07Z', 'platform_update_time': '2026-04-26T13:30:39Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480223018783842\", \"orderCreateTime\": 1777 ... (4196 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:32:15,816 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:32:24,929 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18417 pages=1)
+2026-04-26 21:32:24,930 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:32:24,930 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:32:25,127 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=22
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:32:00Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480257006113033', 'openid': 'wdtFytNniVzmkl', 'status': '8', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '温**', 'receiver_phone': '1******5030', 'receiver_address': '四川成都市青白江区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:32:00Z', 'platform_update_time': '2026-04-26T13:32:17Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false}, \"orderId\": \"3480257006113033\", \"orderCreateTime\": 1777210320000, \"paymentConfirmTime\": 1 ... (3217 characters truncated) ... 59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 59.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:32:55,157 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:33:05,166 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:33:05,770 INFO scraper_client.app.main - scraper-client starting command=start client_id=scraper-client-local
+2026-04-26 21:33:05,771 INFO scraper_client.app.main - log file: /Users/huangwenhua/company/安洋/dianshang-scraper-c/logs/scraper-client-local.log
+2026-04-26 21:33:05,791 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:33:05,792 INFO scraper_client.infra.browser.chrome_discovery - CDP endpoint resolved: http://127.0.0.1:9222
+2026-04-26 21:33:14,980 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18419 pages=1)
+2026-04-26 21:33:14,982 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:33:14,983 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:33:15,177 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:33:15,191 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=23
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.IntegrityError) (1048, \"Column 'platform_update_time' cannot be null\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480214008063694', 'openid': 'jd_6cc8e844f55b2', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '唐**', 'receiver_phone': '1******7854', 'receiver_address': '江苏泰州市泰兴市**********', 'pay_time': None, 'platform_create_time': '2026-04-26 13:32:46', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_6cc8e844f55b2\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\ ... (3379 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)"}
+2026-04-26 21:33:25,195 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:33:35,221 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:33:44,287 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18420 pages=1)
+2026-04-26 21:33:44,288 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:33:44,289 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:33:44,511 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=24
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:33:16Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480231018359125', 'openid': 'jd_780adaf5a0949', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '许**', 'receiver_phone': '1******8249', 'receiver_address': '江苏南京市浦口区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:33:16Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_780adaf5a0949\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\ ... (3381 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:33:45,237 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:33:54,036 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18420 pages=1)
+2026-04-26 21:33:54,037 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:33:54,038 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:33:54,253 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=25
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.IntegrityError) (1048, \"Column 'platform_update_time' cannot be null\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480231018359125', 'openid': 'jd_780adaf5a0949', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '许**', 'receiver_phone': '1******8249', 'receiver_address': '江苏南京市浦口区**********', 'pay_time': None, 'platform_create_time': '2026-04-26 13:33:16', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_780adaf5a0949\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\ ... (3381 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)"}
+2026-04-26 21:33:59,281 INFO scraper_client.services.account_orchestrator - received signal=2, will stop after current account
+2026-04-26 21:34:14,560 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:34:23,431 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18420 pages=1)
+2026-04-26 21:34:23,432 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:34:23,432 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:34:23,628 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=26
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:33:16Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480231018359125', 'openid': 'jd_780adaf5a0949', 'status': '2', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '许**', 'receiver_phone': '1******8249', 'receiver_address': '江苏南京市浦口区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:33:16Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_780adaf5a0949\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\ ... (3381 characters truncated) ...  59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:34:53,670 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:35:02,909 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18421 pages=1)
+2026-04-26 21:35:02,911 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:35:02,911 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:35:03,130 ERROR scraper_client.services.account_orchestrator - task failed account_id=2 round=27
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:34:47Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 7, 'outer_order_id': '3480208009397713', 'openid': 'jd_474b3e3fc1d60', 'status': '2', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '袁**', 'receiver_phone': '1******5777', 'receiver_address': '重庆石柱县南宾街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:34:47Z', 'platform_update_time': None, 'raw_data': '{\"userPin\": \"jd_474b3e3fc1d60\", \"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"orderWarningDesc\": \"\\\\u4e70\\\\u5bb6\\\\u672a\\\\u4ed8\\\\u6b3e\\\\ ... (3411 characters truncated) ...  79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 0.0, \"paymentType\": 4}}', 'uniform_status': 'SHIPPED', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:35:32,945 INFO scraper_client.app.main - scraper-client starting command=start client_id=scraper-client-local
+2026-04-26 21:35:32,946 INFO scraper_client.app.main - log file: /Users/huangwenhua/company/安洋/dianshang-scraper-c/logs/scraper-client-local.log
+2026-04-26 21:35:32,972 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=2 account_name=顺成-Z max_pages=1
+2026-04-26 21:35:32,973 INFO scraper_client.infra.browser.chrome_discovery - CDP endpoint resolved: http://127.0.0.1:9222
+2026-04-26 21:35:33,169 INFO scraper_client.services.account_orchestrator - no task available, sleep=10s
+2026-04-26 21:35:42,039 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18424 pages=1)
+2026-04-26 21:35:42,040 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:35:42,041 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=2 orders=10 items=10 price_info=10
+2026-04-26 21:35:42,319 INFO scraper_client.services.account_orchestrator - task success account_id=2 orders=10 round=28
+2026-04-26 21:35:43,192 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:35:52,164 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18424 pages=1)
+2026-04-26 21:35:52,165 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:35:52,166 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:35:52,352 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=28
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:35:31Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480231005952497', 'openid': 'jd_780adaf5a0949', 'status': '8', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '许**', 'receiver_phone': '1******8249', 'receiver_address': '江苏南京市浦口区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:35:31Z', 'platform_update_time': '2026-04-26T13:35:42Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false}, \"orderId\": \"3480231005952497\", \"orderCreateTime\": 1777210531000, \"paymentConfirmTime\": 1 ... (3211 characters truncated) ... 59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 59.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:36:00,294 INFO scraper_client.services.account_orchestrator - received signal=2, will stop after current account
+2026-04-26 21:36:22,380 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:36:31,240 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18424 pages=1)
+2026-04-26 21:36:31,241 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:36:31,242 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:36:31,428 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=29
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:35:31Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480231005952497', 'openid': 'jd_780adaf5a0949', 'status': '8', 'total_amount': 5990, 'product_count': 1, 'receiver_name': '许**', 'receiver_phone': '1******8249', 'receiver_address': '江苏南京市浦口区**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:35:31Z', 'platform_update_time': '2026-04-26T13:35:42Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480231005952497\", \"orderCreateTime\": 1777 ... (4154 characters truncated) ... 59.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 59.9, \"commission\": 0.0, \"orderSum\": 59.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:37:01,469 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:37:10,375 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18425 pages=1)
+2026-04-26 21:37:10,376 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:37:10,376 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:37:10,549 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=30
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:36:27Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480242005581182', 'openid': 'wdrHBCzgtCQWhc', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '李**', 'receiver_phone': '1******8909', 'receiver_address': '重庆沙坪坝区天星桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:36:27Z', 'platform_update_time': '2026-04-26T13:36:36Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480242005581182\", \"orderCreateTime\": 1777 ... (4198 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:37:40,594 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:37:49,486 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18425 pages=1)
+2026-04-26 21:37:49,487 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:37:49,488 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:37:49,701 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=31
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:36:27Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480242005581182', 'openid': 'wdrHBCzgtCQWhc', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '李**', 'receiver_phone': '1******8909', 'receiver_address': '重庆沙坪坝区天星桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:36:27Z', 'platform_update_time': '2026-04-26T13:36:36Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480242005581182\", \"orderCreateTime\": 1777 ... (4198 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:38:19,759 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:38:28,658 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18425 pages=1)
+2026-04-26 21:38:28,660 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:38:28,660 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:38:28,860 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=32
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:36:27Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480242005581182', 'openid': 'wdrHBCzgtCQWhc', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '李**', 'receiver_phone': '1******8909', 'receiver_address': '重庆沙坪坝区天星桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:36:27Z', 'platform_update_time': '2026-04-26T13:36:36Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480242005581182\", \"orderCreateTime\": 1777 ... (4198 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:38:58,894 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:39:07,640 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18425 pages=1)
+2026-04-26 21:39:07,641 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:39:07,641 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:39:07,823 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=33
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:36:27Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480242005581182', 'openid': 'wdrHBCzgtCQWhc', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '李**', 'receiver_phone': '1******8909', 'receiver_address': '重庆沙坪坝区天星桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:36:27Z', 'platform_update_time': '2026-04-26T13:36:36Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480242005581182\", \"orderCreateTime\": 1777 ... (4198 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:39:37,866 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1
+2026-04-26 21:39:47,036 INFO scraper_client.infra.jd.order_list_extractor - order list extracted orders=10 (total_item=18425 pages=1)
+2026-04-26 21:39:47,037 INFO scraper_client.infra.jd.detail_extractor - detail extraction enriched_orders=10
+2026-04-26 21:39:47,038 INFO scraper_client.infra.jd.jd_scraper - jd scrape done account_id=1 orders=10 items=10 price_info=10
+2026-04-26 21:39:47,235 ERROR scraper_client.services.account_orchestrator - task failed account_id=1 round=34
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 99, in _request_json
+    with request.urlopen(req, timeout=self.timeout) as resp:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/huangwenhua/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/account_orchestrator.py", line 184, in execute_task
+    self.result_uploader.upload(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/services/result_uploader.py", line 24, in upload
+    return self.api_client.upload_results(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        round_no=round_no,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        price_info=price_info,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 43, in upload_results
+    data = self._request_json("POST", "/internal/scraper/results/upload", payload)
+  File "/Users/huangwenhua/company/安洋/dianshang-scraper-c/src/scraper_client/infra/server/internal_api_client.py", line 103, in _request_json
+    raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+RuntimeError: internal api error 500: {"detail":"Failed to upload results: (pymysql.err.OperationalError) (1292, \"Incorrect datetime value: '2026-04-26T13:36:27Z' for column 'platform_create_time' at row 1\")\n[SQL: INSERT INTO orders (platform, shop_id, outer_order_id, openid, status, total_amount, product_count, receiver_name, receiver_phone, receiver_address, pay_time, platform_create_time, platform_update_time, raw_data, uniform_status, ad_cost, employee_id, department_id, finder_id) VALUES (%(platform)s, %(shop_id)s, %(outer_order_id)s, %(openid)s, %(status)s, %(total_amount)s, %(product_count)s, %(receiver_name)s, %(receiver_phone)s, %(receiver_address)s, %(pay_time)s, %(platform_create_time)s, %(platform_update_time)s, %(raw_data)s, %(uniform_status)s, %(ad_cost)s, %(employee_id)s, %(department_id)s, %(finder_id)s)]\n[parameters: {'platform': 'JINGDONG', 'shop_id': 6, 'outer_order_id': '3480242005581182', 'openid': 'wdrHBCzgtCQWhc', 'status': '8', 'total_amount': 7990, 'product_count': 1, 'receiver_name': '李**', 'receiver_phone': '1******8909', 'receiver_address': '重庆沙坪坝区天星桥街道**********', 'pay_time': None, 'platform_create_time': '2026-04-26T13:36:27Z', 'platform_update_time': '2026-04-26T13:36:36Z', 'raw_data': '{\"orderType\": 22, \"orderPromiseInfo\": {\"expChanged\": false, \"promiseShipDate\": 1777402800000}, \"orderId\": \"3480242005581182\", \"orderCreateTime\": 1777 ... (4198 characters truncated) ... 79.9, \"freight\": 0.0, \"paymentTypeName\": \"\\\\u5728\\\\u7ebf\\\\u652f\\\\u4ed8\", \"receivables\": 79.9, \"commission\": 0.0, \"orderSum\": 79.9, \"paymentType\": 4}}', 'uniform_status': 'UNKNOWN', 'ad_cost': 0, 'employee_id': None, 'department_id': None, 'finder_id': None}]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"}
+2026-04-26 21:40:17,261 INFO scraper_client.infra.jd.jd_scraper - jd scrape start account_id=1 account_name=钰谢-老板 max_pages=1

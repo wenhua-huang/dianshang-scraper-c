@@ -44,6 +44,7 @@ PriceInfo record
 from __future__ import annotations
 
 import logging
+from datetime import datetime, timezone
 from typing import Any
 
 from scraper_client.infra.jd.exceptions import JDParseError
@@ -69,16 +70,47 @@ def _yuan_to_cents(value: Any) -> int | None:
         return None
 
 
-def _ms_to_iso(ms: Any) -> str | None:
-    """Convert a millisecond UNIX timestamp to ISO-8601 string."""
+def _ms_to_mysql_datetime(ms: Any) -> str | None:
+    """Convert a millisecond UNIX timestamp to MySQL DATETIME string (UTC)."""
     if ms is None:
         return None
     try:
-        import datetime
         ts = int(ms) / 1000
-        return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
     except (TypeError, ValueError, OSError):
         return None
+
+
+def _normalize_datetime(value: Any) -> str | None:
+    """Normalize various datetime representations to MySQL DATETIME string."""
+    if value is None:
+        return None
+
+    # Millisecond timestamp as int/float.
+    if isinstance(value, (int, float)) and int(value) > 1_000_000_000_000:
+        return _ms_to_mysql_datetime(value)
+
+    text = str(value).strip()
+    if not text:
+        return None
+
+    # Millisecond timestamp encoded as string.
+    if text.isdigit() and len(text) >= 13:
+        return _ms_to_mysql_datetime(text)
+
+    # ISO-8601 with trailing Z (UTC) -> +00:00 for fromisoformat.
+    if text.endswith("Z"):
+        text = text[:-1] + "+00:00"
+
+    try:
+        dt = datetime.fromisoformat(text)
+    except ValueError:
+        # Fallback: already a plain datetime string or unknown format; keep as-is.
+        return str(value)
+
+    if dt.tzinfo is not None:
+        dt = dt.astimezone(timezone.utc).replace(tzinfo=None)
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def parse_order(raw: dict[str, Any]) -> dict[str, Any]:
@@ -105,15 +137,15 @@ def parse_order(raw: dict[str, Any]) -> dict[str, Any]:
     create_raw = raw.get("orderCreateTime") or raw.get("orderTime") or raw.get("platform_create_time")
     update_raw = raw.get("paymentConfirmTime") or raw.get("modifyTime") or raw.get("platform_update_time")
 
-    if isinstance(create_raw, (int, float)) and create_raw > 1_000_000_000_000:
-        platform_create_time = _ms_to_iso(create_raw)
-    else:
-        platform_create_time = create_raw
+    platform_create_time = _normalize_datetime(create_raw)
+    platform_update_time = _normalize_datetime(update_raw)
 
-    if isinstance(update_raw, (int, float)) and update_raw > 1_000_000_000_000:
-        platform_update_time = _ms_to_iso(update_raw)
-    else:
-        platform_update_time = update_raw
+    # Backend columns are NOT NULL; fall back to keep insert compatible.
+    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    if platform_create_time is None:
+        platform_create_time = platform_update_time or now_utc
+    if platform_update_time is None:
+        platform_update_time = platform_create_time
 
     # --- total amount ---
     payment_info = raw.get("orderPaymentInfo") or {}
