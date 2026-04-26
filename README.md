@@ -30,6 +30,8 @@ Optional:
 
 - `SCRAPER_SKIP_BACKEND_CHECK=1` (only for local smoke/startup check)
 
+`start.bat --check-only` skips the CDP reachability probe automatically so packaging smoke checks do not require a live Chrome debugging port.
+
 ## Start (continuous)
 
 ```bash

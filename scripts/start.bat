@@ -70,11 +70,15 @@ if /I "%SCRAPER_SKIP_BACKEND_CHECK%"=="1" (
 )
 
 echo [CHECK] cdp reachability...
+if "%CHECK_ONLY%"=="1" (
+  echo [WARN] cdp check skipped in --check-only mode
+) else (
 powershell -NoProfile -Command "$ErrorActionPreference='Stop'; $u=$env:PLAYWRIGHT_CDP_URL.TrimEnd('/'); $r=Invoke-WebRequest -UseBasicParsing -Method Get -Uri ($u + '/json/version') -TimeoutSec 10; if ($r.StatusCode -ne 200) { throw 'unexpected status: ' + $r.StatusCode }"
 if errorlevel 1 (
   echo [ERROR] CDP endpoint is not reachable: %PLAYWRIGHT_CDP_URL%
   set "ERR=1"
   goto :end
+)
 )
 
 echo [OK] prechecks passed.
