@@ -68,7 +68,7 @@ jobs:
       - name: Build executable
         shell: pwsh
         run: |
-          pyinstaller --onefile --name scraper-client src/scraper_client/app/main.py --distpath ./dist --workpath ./build
+          pyinstaller --onefile --console --name scraper-client src/scraper_client/app/main.py --distpath ./dist --workpath ./build
 
       - name: Stage package
         shell: pwsh

@@ -4,6 +4,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
+from scraper_client.core.runtime import get_runtime_dir
+
 
 def configure_logging(level: str = "INFO", *, client_id: str = "scraper-client") -> Path | None:
     log_level = getattr(logging, level.upper(), logging.INFO)
@@ -13,7 +15,7 @@ def configure_logging(level: str = "INFO", *, client_id: str = "scraper-client")
     log_file_path: Path | None = None
 
     try:
-        log_dir = Path.cwd() / "logs"
+        log_dir = get_runtime_dir() / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
         safe_client_id = "".join(ch if ch.isalnum() or ch in {"-", "_"} else "_" for ch in client_id)
         safe_client_id = safe_client_id.strip("_") or "scraper-client"

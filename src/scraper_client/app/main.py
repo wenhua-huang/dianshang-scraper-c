@@ -63,8 +63,12 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("scraper-client starting command=%s client_id=%s", args.command, settings.scraper_client_id)
     if auto_started:
         logger.info("detected no CLI args, defaulted to 'start' mode")
+    logger.info("backend base url: %s", settings.scraper_server_base_url)
     if log_path is not None:
         logger.info("log file: %s", log_path)
+        print(f"[scraper-client] running, log file: {log_path}", flush=True)
+    else:
+        print("[scraper-client] running", flush=True)
 
     try:
         if args.command == "start":

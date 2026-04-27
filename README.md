@@ -144,6 +144,8 @@ Runtime logs are written to:
 ./logs/{SCRAPER_CLIENT_ID}.log
 ```
 
+Note: for packaged EXE, the `logs` directory is created next to `scraper-client.exe`.
+
 ## Log Upload / Run Log Contract
 
 For each task execution:

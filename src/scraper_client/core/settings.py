@@ -7,21 +7,28 @@ from pathlib import Path
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from scraper_client.core.runtime import get_runtime_dir
+
 
 def _resolve_env_file() -> str:
+    runtime_dir = get_runtime_dir()
+
     explicit_env_file = os.getenv("SCRAPER_ENV_FILE", "").strip()
     if explicit_env_file:
-        return explicit_env_file
+        explicit_path = Path(explicit_env_file)
+        if not explicit_path.is_absolute():
+            explicit_path = runtime_dir / explicit_path
+        return str(explicit_path)
 
-    package_env_marker = Path(".package-env")
+    package_env_marker = runtime_dir / ".package-env"
     if package_env_marker.exists():
         package_env = package_env_marker.read_text(encoding="utf-8").strip().lower()
         if package_env == "test":
-            return ".env.test"
+            return str(runtime_dir / ".env.test")
         if package_env == "prod":
-            return ".env.prod"
+            return str(runtime_dir / ".env.prod")
 
-    return ".env"
+    return str(runtime_dir / ".env")
 
 
 class Settings(BaseSettings):

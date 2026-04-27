@@ -113,9 +113,9 @@ class InternalApiClient:
                 text = resp.read().decode("utf-8")
         except error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="ignore")
-            raise RuntimeError(f"internal api error {exc.code}: {detail}") from exc
+            raise RuntimeError(f"internal api error {exc.code} url={url}: {detail}") from exc
         except error.URLError as exc:
-            raise RuntimeError(f"internal api unavailable: {exc.reason}") from exc
+            raise RuntimeError(f"internal api unavailable url={url}: {exc.reason}") from exc
 
         if not text:
             return {}
