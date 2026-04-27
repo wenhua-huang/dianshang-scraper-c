@@ -112,6 +112,7 @@ jobs:
         with:
           name: scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-test
           path: package/scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-test
+          include-hidden-files: true
           if-no-files-found: error
 
       - name: Upload artifact (prod)
@@ -120,4 +121,5 @@ jobs:
         with:
           name: scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-prod
           path: package/scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-prod
+          include-hidden-files: true
           if-no-files-found: error
