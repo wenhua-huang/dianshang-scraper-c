@@ -17,3 +17,5 @@ artifacts/
 logs/
 
 .env
+.env.test
+.env.prod
