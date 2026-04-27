@@ -1,13 +1,35 @@
 from __future__ import annotations
 
+import os
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+def _resolve_env_file() -> str:
+    explicit_env_file = os.getenv("SCRAPER_ENV_FILE", "").strip()
+    if explicit_env_file:
+        return explicit_env_file
+
+    package_env_marker = Path(".package-env")
+    if package_env_marker.exists():
+        package_env = package_env_marker.read_text(encoding="utf-8").strip().lower()
+        if package_env == "test":
+            return ".env.test"
+        if package_env == "prod":
+            return ".env.prod"
+
+    return ".env"
+
+
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=_resolve_env_file(),
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
     log_level: str = Field(default="INFO")
 

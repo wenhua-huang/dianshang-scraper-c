@@ -5,6 +5,16 @@ env:
 
 on:
   workflow_dispatch:
+    inputs:
+      package_target:
+        description: Package target environment
+        required: true
+        type: choice
+        default: prod
+        options:
+          - prod
+          - test
+          - both
   push:
     tags:
       - "v*"
@@ -29,11 +39,31 @@ jobs:
           pip install -e .[dev]
 
       - name: Extract version
+        id: extract_version
         shell: pwsh
         run: |
           $version = python -c 'from pathlib import Path; import tomllib; print(tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])'
           if (-not $version) { throw 'Failed to parse version from pyproject.toml' }
           "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Determine package targets
+        id: determine_targets
+        shell: pwsh
+        run: |
+          $targets = @("prod")
+          if ("${{ github.event_name }}" -eq "workflow_dispatch") {
+            switch ("${{ inputs.package_target }}") {
+              "test" { $targets = @("test") }
+              "both" { $targets = @("test", "prod") }
+              default { $targets = @("prod") }
+            }
+          }
+          "PACKAGE_TARGETS=$($targets -join ',')" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          $uploadTest = if ($targets -contains "test") { "true" } else { "false" }
+          $uploadProd = if ($targets -contains "prod") { "true" } else { "false" }
+          "upload_test=$uploadTest" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "upload_prod=$uploadProd" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Build executable
         shell: pwsh
@@ -43,32 +73,51 @@ jobs:
       - name: Stage package
         shell: pwsh
         run: |
-          $pkgDir = "staging/scraper-client-$env:VERSION-windows-x86_64"
-          New-Item -ItemType Directory -Force -Path $pkgDir | Out-Null
-          Copy-Item -Path "dist/scraper-client.exe" -Destination "$pkgDir/scraper-client.exe" -Force
-          Copy-Item -Path ".env.example" -Destination "$pkgDir/.env.example" -Force
-          Copy-Item -Path "scripts/start.bat" -Destination "$pkgDir/start.bat" -Force
+          $targets = $env:PACKAGE_TARGETS -split ","
+          foreach ($target in $targets) {
+            $pkgDir = "package/scraper-client-$env:VERSION-windows-x86_64-$target"
+            $targetEnvFile = ".env.$target"
+
+            if (-not (Test-Path $targetEnvFile)) {
+              throw "Missing environment file: $targetEnvFile"
+            }
+
+            New-Item -ItemType Directory -Force -Path $pkgDir | Out-Null
+            Copy-Item -Path "dist/scraper-client.exe" -Destination "$pkgDir/scraper-client.exe" -Force
+            Copy-Item -Path ".env.example" -Destination "$pkgDir/.env.example" -Force
+            Copy-Item -Path $targetEnvFile -Destination "$pkgDir/$targetEnvFile" -Force
+            Set-Content -Path "$pkgDir/.package-env" -Value $target -NoNewline
+          }
 
       - name: Smoke check
         shell: pwsh
         run: |
-          $exe = "./staging/scraper-client-$env:VERSION-windows-x86_64/scraper-client.exe"
-          & $exe --help
-          $env:SCRAPER_SERVER_BASE_URL = "http://127.0.0.1:8000/api/v1"
-          $env:SCRAPER_INTERNAL_API_KEY = "ci-smoke-key"
-          $env:PLAYWRIGHT_CDP_URL = "http://127.0.0.1:9222"
-          $env:SCRAPER_SKIP_BACKEND_CHECK = "1"
-          cmd /c "staging\scraper-client-$env:VERSION-windows-x86_64\start.bat --check-only"
+          $targets = $env:PACKAGE_TARGETS -split ","
+          foreach ($target in $targets) {
+            $pkgDir = "package/scraper-client-$env:VERSION-windows-x86_64-$target"
+            $exe = "./$pkgDir/scraper-client.exe"
+            & $exe --help
 
-      - name: Archive package
-        shell: pwsh
-        run: |
-          $zipName = "scraper-client-$env:VERSION-windows-x86_64.zip"
-          Compress-Archive -Path "staging/scraper-client-$env:VERSION-windows-x86_64" -DestinationPath $zipName -Force
+            $env:SCRAPER_SERVER_BASE_URL = "http://127.0.0.1:8000/api/v1"
+            $env:SCRAPER_INTERNAL_API_KEY = "ci-smoke-key"
+            $env:PLAYWRIGHT_CDP_URL = "http://127.0.0.1:9222"
+            $env:SCRAPER_SKIP_BACKEND_CHECK = "1"
+            $env:SCRAPER_ENV_FILE = ".env.$target"
+            & $exe start --help
+          }
 
-      - name: Upload artifact
+      - name: Upload artifact (test)
+        if: steps.determine_targets.outputs.upload_test == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: scraper-client-${{ env.VERSION }}-windows-x86_64
-          path: scraper-client-${{ env.VERSION }}-windows-x86_64.zip
+          name: scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-test
+          path: package/scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-test
+          if-no-files-found: error
+
+      - name: Upload artifact (prod)
+        if: steps.determine_targets.outputs.upload_prod == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-prod
+          path: package/scraper-client-${{ steps.extract_version.outputs.version }}-windows-x86_64-prod
           if-no-files-found: error

@@ -65,7 +65,7 @@ Optional:
 
 - `SCRAPER_SKIP_BACKEND_CHECK=1` (only for local smoke/startup check)
 
-`start.bat --check-only` skips the CDP reachability probe automatically so packaging smoke checks do not require a live Chrome debugging port.
+
 
 ## Start (continuous)
 
@@ -90,45 +90,52 @@ Behavior:
 ### Build Windows executable
 
 1. Open GitHub Actions.
-2. Run workflow `Build Windows Executable` manually (`workflow_dispatch`).
+2. Run workflow `Build Windows Executable` manually (`workflow_dispatch`) and choose `package_target`:
+	- `test`: build package that reads `.env.test`
+	- `prod`: build package that reads `.env.prod`
+	- `both`: build both package variants
 3. Wait for the build to finish and download the artifact.
 
 You can also trigger this workflow by pushing a tag like `v0.1.0`.
 
 Naming convention:
-- `scraper-client-{version}-{platform}-{arch}`
-- Example: `scraper-client-0.1.0-windows-x86_64.zip`
+- `scraper-client-{version}-{platform}-{arch}-{target}`
+- Example: `scraper-client-1.0.1-windows-x86_64-test`
+
+GitHub Actions artifact name also includes the target suffix:
+- `scraper-client-{version}-windows-x86_64-test`
+- `scraper-client-{version}-windows-x86_64-prod`
 
 Package layout in artifact:
-- `staging/scraper-client-{version}-windows-x86_64/scraper-client.exe`
-- `staging/scraper-client-{version}-windows-x86_64/start.bat`
-- `staging/scraper-client-{version}-windows-x86_64/.env.example`
+- `scraper-client-{version}-windows-x86_64-{target}/scraper-client.exe`
+- `scraper-client-{version}-windows-x86_64-{target}/.env.{target}`
+- `scraper-client-{version}-windows-x86_64-{target}/.package-env`
+- `scraper-client-{version}-windows-x86_64-{target}/.env.example`
+
+`scraper-client.exe` will auto-detect `.package-env` and load `.env.test` or `.env.prod` accordingly.
 
 ### Run on Windows
 
-1. Extract `scraper-client-{version}-windows-x86_64.zip`.
-2. Copy `.env.example` to `.env` and fill values.
-3. Configure environment variables if you do not use `.env`:
+1. Extract the GitHub artifact.
+2. Open folder `scraper-client-{version}-windows-x86_64-{target}`.
+3. Edit `.env.test` or `.env.prod` in this folder (based on package target).
+4. Configure environment variables if you do not use package env files:
 	- `SCRAPER_SERVER_BASE_URL` (example: `http://127.0.0.1:8000/api/v1`)
 	- `SCRAPER_INTERNAL_API_KEY`
 	- `PLAYWRIGHT_CDP_URL` (example: `http://127.0.0.1:9222`)
 	- `SCRAPER_CLIENT_ID` (example: `windows-machine-01`)
-4. Start client with precheck:
+5. Start client:
 
 ```powershell
-.\staging\scraper-client-{version}-windows-x86_64\start.bat
+.\scraper-client-{version}-windows-x86_64-{target}\scraper-client.exe
 ```
 
-`start.bat` performs prechecks before start:
+也可以双击 `scraper-client.exe` 启动（无参数时默认进入 `start` 模式）。
 
-- Backend endpoint reachable and `X-Scraper-Key` accepted.
-- `PLAYWRIGHT_CDP_URL` reachable (`/json/version`).
-- Log directory writable.
-
-Check-only mode (no daemon start):
+命令行方式启动（效果相同）：
 
 ```powershell
-.\staging\scraper-client-{version}-windows-x86_64\start.bat --check-only
+.\scraper-client-{version}-windows-x86_64-{target}\scraper-client.exe start
 ```
 
 Runtime logs are written to:
