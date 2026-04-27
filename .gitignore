@@ -14,5 +14,6 @@ dist/
 *.egg-info/
 
 artifacts/
+logs/
 
 .env
