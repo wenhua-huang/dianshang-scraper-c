@@ -10,7 +10,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from scraper_client.core.runtime import get_runtime_dir
 
 
-def _resolve_env_file() -> str:
+def get_resolved_env_file() -> Path:
     runtime_dir = get_runtime_dir()
 
     explicit_env_file = os.getenv("SCRAPER_ENV_FILE", "").strip()
@@ -18,17 +18,31 @@ def _resolve_env_file() -> str:
         explicit_path = Path(explicit_env_file)
         if not explicit_path.is_absolute():
             explicit_path = runtime_dir / explicit_path
-        return str(explicit_path)
+        return explicit_path
 
     package_env_marker = runtime_dir / ".package-env"
     if package_env_marker.exists():
         package_env = package_env_marker.read_text(encoding="utf-8").strip().lower()
         if package_env == "test":
-            return str(runtime_dir / ".env.test")
+            marker_env = runtime_dir / ".env.test"
+            if marker_env.exists():
+                return marker_env
         if package_env == "prod":
-            return str(runtime_dir / ".env.prod")
+            marker_env = runtime_dir / ".env.prod"
+            if marker_env.exists():
+                return marker_env
 
-    return str(runtime_dir / ".env")
+    # Fallback for copied/moved package folders where .package-env may be missing.
+    for candidate in (".env", ".env.test", ".env.prod"):
+        candidate_path = runtime_dir / candidate
+        if candidate_path.exists():
+            return candidate_path
+
+    return runtime_dir / ".env"
+
+
+def _resolve_env_file() -> str:
+    return str(get_resolved_env_file())
 
 
 class Settings(BaseSettings):

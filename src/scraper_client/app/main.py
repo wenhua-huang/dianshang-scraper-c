@@ -3,9 +3,10 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
+from pathlib import Path
 
 from scraper_client.core.logging import configure_logging
-from scraper_client.core.settings import get_settings
+from scraper_client.core.settings import get_resolved_env_file, get_settings
 from scraper_client.services.account_orchestrator import AccountOrchestrator
 
 logger = logging.getLogger(__name__)
@@ -45,7 +46,9 @@ def main(argv: list[str] | None = None) -> int:
         args = build_parser().parse_args(["start"])
         auto_started = True
 
+    env_file_path = Path("<unknown>")
     try:
+        env_file_path = get_resolved_env_file()
         settings = get_settings()
         if args.command == "start":
             if args.poll_interval is not None:
@@ -64,6 +67,7 @@ def main(argv: list[str] | None = None) -> int:
     if auto_started:
         logger.info("detected no CLI args, defaulted to 'start' mode")
     logger.info("backend base url: %s", settings.scraper_server_base_url)
+    logger.info("env file: %s exists=%s", env_file_path, env_file_path.exists())
     if log_path is not None:
         logger.info("log file: %s", log_path)
         print(f"[scraper-client] running, log file: {log_path}", flush=True)
