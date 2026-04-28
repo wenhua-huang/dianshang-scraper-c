@@ -37,7 +37,7 @@ cp .env.example .env
 2. 启动带远程调试端口的 Chrome（示例端口 9222）：
 
 ```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/tmp/dianshang-scraper-c-profile
 ```
 
 3. 启动客户端（持续轮询任务）：
