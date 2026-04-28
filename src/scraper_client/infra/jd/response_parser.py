@@ -150,7 +150,7 @@ def _normalize_jd_status(value: Any) -> str:
     if not status:
         return ""
 
-    if status in {"-1", "0", "1", "2", "3", "4", "5", "6"}:
+    if status in {"-1", "0", "1", "2", "3", "4", "5", "6", "8"}:
         return status
 
     for text, code in JD_TEXT_STATUS_CODE_MAP:
