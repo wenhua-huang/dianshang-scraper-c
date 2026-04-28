@@ -147,7 +147,9 @@ class ChromeCdpResolver:
                 return cdp_url
             if proc.poll() is not None:
                 raise ChromeDiscoveryError("Chrome exited before CDP endpoint became ready")
-            time.sleep(0.5)
+            sleep_secs = 0.5
+            logger.debug("Chrome CDP not ready yet, sleeping_secs=%s", sleep_secs)
+            time.sleep(sleep_secs)
 
         raise ChromeDiscoveryError("Timed out waiting for auto-started Chrome CDP endpoint")
 

@@ -51,13 +51,16 @@ class AccountOrchestrator:
                 task = self._fetch_task()
                 if task is None:
                     retry_count = 0
-                    logger.info("no task available, sleep=%ss", self.settings.empty_queue_backoff_seconds)
-                    time.sleep(self.settings.empty_queue_backoff_seconds)
+                    sleep_secs = self.settings.empty_queue_backoff_seconds
+                    logger.info("no task available, sleeping_secs=%s", sleep_secs)
+                    time.sleep(sleep_secs)
                     continue
 
                 self.execute_task(task)
                 retry_count = 0
-                time.sleep(self.settings.poll_interval_seconds)
+                sleep_secs = self.settings.poll_interval_seconds
+                logger.info("task completed, sleeping_secs=%s", sleep_secs)
+                time.sleep(sleep_secs)
             except Exception as exc:
                 retry_count += 1
                 backoff = min(
@@ -75,6 +78,7 @@ class AccountOrchestrator:
                     logger.error("max retry attempts reached, continue in low-frequency mode")
                     retry_count = 0
                     backoff = self.settings.retry_backoff_max_seconds
+                logger.info("daemon cycle error, sleeping_secs=%s", backoff)
                 time.sleep(backoff)
 
     def _fetch_task(self) -> dict | None:
