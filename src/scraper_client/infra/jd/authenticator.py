@@ -76,7 +76,7 @@ class JDAuthenticator:
         page = session.page
         force_relogin = bool(self._settings.force_relogin_each_run)
         logger.info(
-            "auth check start account_id=%s account_name=%s allow_manual_login=%s force_relogin=%s",
+            "登录检查开始 account_id=%s account_name=%s allow_manual_login=%s force_relogin=%s",
             account.get("id"),
             account.get("account_name"),
             allow_manual_login,
@@ -86,40 +86,39 @@ class JDAuthenticator:
         if force_relogin:
             try:
                 session.context.clear_cookies()
-                logger.info("force relogin: cleared context cookies account_id=%s", account.get("id"))
+                logger.info("强制重新登录：已清除浏览器 Cookie account_id=%s", account.get("id"))
             except Exception:
                 logger.warning(
-                    "force relogin: failed to clear context cookies account_id=%s",
+                    "强制重新登录：清除 Cookie 失败 account_id=%s",
                     account.get("id"),
                     exc_info=True,
                 )
 
         page.goto(JD_ORDER_LIST_URL, wait_until="domcontentloaded", timeout=90_000)
-        logger.info("auth check visited order-list target=%s current_url=%s", JD_ORDER_LIST_URL, page.url)
+        logger.info("登录检查：已访问订单列表页 target=%s current_url=%s", JD_ORDER_LIST_URL, page.url)
         if not force_relogin and not self._is_login_required(page):
             if self._is_order_list_page(page):
                 logger.info(
-                    "auth check passed by existing session account_id=%s no credential input needed",
+                    "登录检查通过（复用现有 Session）account_id=%s 无需输入凭证",
                     account.get("id"),
                 )
                 return
             logger.warning(
-                "session appears logged-in but current page is not order-list account_id=%s current_url=%s",
+                "Session 状态已登录，但当前页不是订单列表 account_id=%s current_url=%s",
                 account.get("id"),
                 page.url,
             )
 
         if force_relogin and not self._is_login_required(page):
             logger.warning(
-                "force relogin requested but session still appears logged in account_id=%s; "
-                "will continue with credential login attempt",
+                "已请求强制重新登录，但 Session 仍显示已登录 account_id=%s；继续尝试凭证登录",
                 account.get("id"),
             )
 
         # Retry once with persisted state reloaded from disk.
         if not force_relogin:
             logger.info(
-                "auth check failed first pass, reloading persisted storage_state account_id=%s",
+                "登录检查首次未通过，重新加载持久化 storage_state account_id=%s",
                 account.get("id"),
             )
             self._session_manager._load_storage_state(session.context, session.storage_state_path)
@@ -127,29 +126,29 @@ class JDAuthenticator:
             if not self._is_login_required(page):
                 if self._is_order_list_page(page):
                     logger.info(
-                        "auth check passed after storage_state reload account_id=%s no credential input needed",
+                        "重加载 storage_state 后登录检查通过 account_id=%s 无需输入凭证",
                         account.get("id"),
                     )
                     return
                 logger.warning(
-                    "storage-state reload still not at order-list page account_id=%s current_url=%s",
+                    "重加载 storage_state 后仍未到订单列表页 account_id=%s current_url=%s",
                     account.get("id"),
                     page.url,
                 )
 
         # Try credential-based login before falling back to manual login.
-        logger.info("auth check still requires login, trying credential login account_id=%s", account.get("id"))
+        logger.info("仍需登录，尝试使用账号密码自动登录 account_id=%s", account.get("id"))
         if self._try_auto_login(page, account=account, wait_timeout_seconds=wait_timeout_seconds):
             self._session_manager._save_storage_state(session.context, session.storage_state_path)
-            logger.info("auth completed by credential login account_id=%s", account.get("id"))
+            logger.info("账号密码登录成功 account_id=%s", account.get("id"))
             return
 
         if not allow_manual_login:
             raise JDSessionExpiredError("session expired, manual login required")
 
         logger.warning(
-            "JD merchant login required account_id=%s account_name=%s — "
-            "please complete login at shop.jd.com in the opened browser window",
+            "需要手动登录京东商家后台 account_id=%s account_name=%s —— "
+            "请在已打开的浏览器窗口完成登录",
             account.get("id"),
             account.get("account_name"),
         )
@@ -162,7 +161,7 @@ class JDAuthenticator:
                 page.goto(JD_ORDER_LIST_URL, wait_until="domcontentloaded", timeout=90_000)
                 if not self._is_login_required(page) and self._is_order_list_page(page):
                     self._session_manager._save_storage_state(session.context, session.storage_state_path)
-                    logger.info("auth completed by manual login account_id=%s", account.get("id"))
+                    logger.info("手动登录成功 account_id=%s", account.get("id"))
                     return
             self._handle_verification_if_present(page, account=account)
             page.wait_for_timeout(1500)
@@ -181,11 +180,11 @@ class JDAuthenticator:
         username = str(account.get("account_name") or "").strip()
         password = str(account.get("account_password") or "").strip()
         if not username or not password:
-            logger.info("skip auto login: missing account_name/account_password")
+            logger.info("跳过自动登录：account_name 或 account_password 为空")
             return False
 
         logger.info(
-            "attempting credential login account_id=%s username=%s",
+            "尝试账号密码登录 account_id=%s username=%s",
             account.get("id"),
             username,
         )
@@ -197,7 +196,7 @@ class JDAuthenticator:
                 return True
 
         self._switch_to_password_login(page)
-        logger.info("switched to password login tab account_id=%s", account.get("id"))
+        logger.info("已切换至密码登录标签页 account_id=%s", account.get("id"))
 
         username_selectors = [
             "input#loginname",
@@ -222,15 +221,15 @@ class JDAuthenticator:
         ]
 
         if not self._fill_first_available(page, username_selectors, username):
-            logger.warning("auto login failed: username input not found")
+            logger.warning("自动登录失败：未找到用户名输入框")
             return False
-        logger.info("typed username account_id=%s", account.get("id"))
+        logger.info("已输入用户名 account_id=%s", account.get("id"))
 
         if not self._fill_first_available(page, password_selectors, password):
-            logger.warning("auto login failed: password input not found")
+            logger.warning("自动登录失败：未找到密码输入框")
             return False
         logger.info(
-            "typed password account_id=%s password_length=%s",
+            "已输入密码 account_id=%s password_length=%s",
             account.get("id"),
             len(password),
         )
@@ -242,17 +241,17 @@ class JDAuthenticator:
         if not clicked:
             # Last resort: submit from password input.
             if not self._press_enter_first_available(page, password_selectors):
-                logger.warning("auto login failed: submit control not found")
+                logger.warning("自动登录失败：未找到提交按钮")
                 return False
-            logger.info("submitted login by Enter key account_id=%s", account.get("id"))
+            logger.info("通过回车键提交登录 account_id=%s", account.get("id"))
         else:
-            logger.info("clicked login submit button account_id=%s", account.get("id"))
+            logger.info("已点击登录提交按钮 account_id=%s", account.get("id"))
 
         # JD may switch into SMS verification after credential submit.
         if self._detect_sms_verification(page):
-            logger.warning("sms verification detected after login submit account_id=%s", account.get("id"))
+            logger.warning("提交登录后检测到短信验证码 account_id=%s", account.get("id"))
             if not self._handle_sms_verification(page, account=account):
-                logger.warning("sms verification flow failed account_id=%s", account.get("id"))
+                logger.warning("短信验证码流程失败 account_id=%s", account.get("id"))
                 return False
 
         deadline = time.time() + max(20, int(wait_timeout_seconds))
@@ -262,10 +261,10 @@ class JDAuthenticator:
             if not self._is_login_required(page):
                 page.goto(JD_ORDER_LIST_URL, wait_until="domcontentloaded", timeout=90_000)
                 if not self._is_login_required(page) and self._is_order_list_page(page):
-                    logger.info("credential login succeeded account_id=%s", account.get("id"))
+                    logger.info("账号密码登录成功，已确认 account_id=%s", account.get("id"))
                     return True
 
-        logger.warning("credential login timed out account_id=%s", account.get("id"))
+        logger.warning("账号密码登录超时 account_id=%s", account.get("id"))
         return False
 
     def _click_login_submit(self, page: Page, selectors: list[str]) -> bool:
@@ -297,31 +296,31 @@ class JDAuthenticator:
     def _handle_sms_verification(self, page: Page, *, account: dict[str, Any]) -> bool:
         account_id = int(account.get("id") or 0)
         if account_id <= 0:
-            logger.warning("sms verification skipped: invalid account id")
+            logger.warning("跳过短信验证：无效的账号 ID")
             return False
 
         if self._fill_sms_phone(page, account=account):
-            logger.info("typed sms phone number account_id=%s", account_id)
+            logger.info("已输入短信手机号 account_id=%s", account_id)
         else:
-            logger.info("sms phone input skipped/not found account_id=%s", account_id)
+            logger.info("手机号输入框未找到或已跳过 account_id=%s", account_id)
 
         if not self._trigger_sms_send(page):
-            logger.warning("sms verification trigger not found account_id=%s", account_id)
+            logger.warning("未找到发送验证码按钮 account_id=%s", account_id)
             return False
-        logger.info("clicked send sms verification button account_id=%s", account_id)
+        logger.info("已点击发送验证码按钮 account_id=%s", account_id)
 
         try:
             session = self._api_client.create_verification_session(account_id)
         except Exception:
-            logger.exception("create verification session failed account_id=%s", account_id)
+            logger.exception("创建验证码会话失败 account_id=%s", account_id)
             return False
 
         request_id = str(session.get("request_id") or "").strip()
         if not request_id:
-            logger.warning("verification session missing request_id account_id=%s", account_id)
+            logger.warning("验证码会话缺少 request_id account_id=%s", account_id)
             return False
 
-        logger.info("verification session created account_id=%s request_id=%s", account_id, request_id)
+        logger.info("验证码会话已创建 account_id=%s request_id=%s", account_id, request_id)
         deadline = time.time() + int(self._settings.verification_max_wait_seconds)
         poll_seconds = float(self._settings.verification_poll_interval_seconds)
 
@@ -329,14 +328,14 @@ class JDAuthenticator:
             try:
                 status_payload = self._api_client.get_verification_status(request_id)
             except Exception:
-                logger.exception("get verification status failed request_id=%s", request_id)
+                logger.exception("查询验证码状态失败 request_id=%s", request_id)
                 page.wait_for_timeout(int(poll_seconds * 1000))
                 continue
 
             status_text = str(status_payload.get("status") or "")
             code_available = bool(status_payload.get("code_available"))
             logger.info(
-                "verification polling account_id=%s request_id=%s status=%s code_available=%s",
+                "验证码轮询 account_id=%s request_id=%s status=%s code_available=%s",
                 account_id,
                 request_id,
                 status_text,
@@ -347,23 +346,23 @@ class JDAuthenticator:
                 try:
                     consumed = self._api_client.consume_verification_code(request_id)
                 except Exception:
-                    logger.exception("consume verification code failed request_id=%s", request_id)
+                    logger.exception("消费验证码失败 request_id=%s", request_id)
                     return False
 
                 code = str(consumed.get("code") or "").strip()
                 if not code:
-                    logger.warning("verification code empty request_id=%s", request_id)
+                    logger.warning("验证码为空 request_id=%s", request_id)
                     return False
-                logger.info("verification code received request_id=%s", request_id)
+                logger.info("已收到验证码 request_id=%s", request_id)
                 return self._submit_code_to_page(page, code)
 
             if status_text in {"EXPIRED", "CONSUMED"}:
-                logger.warning("verification session ended request_id=%s status=%s", request_id, status_text)
+                logger.warning("验证码会话已结束 request_id=%s status=%s", request_id, status_text)
                 return False
 
             page.wait_for_timeout(int(poll_seconds * 1000))
 
-        logger.warning("verification wait timeout request_id=%s", request_id)
+        logger.warning("等待验证码超时 request_id=%s", request_id)
         return False
 
     @staticmethod
@@ -429,13 +428,13 @@ class JDAuthenticator:
 
         if not JDAuthenticator._fill_first_available(page, input_selectors, code):
             return False
-        logger.info("typed sms verification code code_length=%s", len(code))
+        logger.info("已输入短信验证码 code_length=%s", len(code))
         if JDAuthenticator._click_first_available(page, submit_selectors):
-            logger.info("submitted sms verification by button")
+            logger.info("已点击按钮提交验证码")
             return True
         submitted = JDAuthenticator._press_enter_first_available(page, input_selectors)
         if submitted:
-            logger.info("submitted sms verification by Enter key")
+            logger.info("已通过回车键提交验证码")
         return submitted
 
     @staticmethod
@@ -573,14 +572,14 @@ class JDAuthenticator:
         """检测行为验证码或短信验证码，发现时发送邮件通知（每类最多通知一次/轮）。"""
         if self._detect_behavior_captcha(page):
             logger.warning(
-                "behavior captcha detected account_id=%s account_name=%s",
+                "检测到行为验证码（滑块）account_id=%s account_name=%s",
                 account.get("id"),
                 account.get("account_name"),
             )
             to = str(account.get("email") or "").strip()
             if to:
                 logger.info(
-                    "sending behavior captcha alert email account_id=%s to=%s",
+                    "发送行为验证码提醒邮件 account_id=%s to=%s",
                     account.get("id"),
                     to,
                 )
@@ -595,14 +594,14 @@ class JDAuthenticator:
                 )
         elif self._detect_sms_verification(page):
             logger.warning(
-                "SMS verification code required account_id=%s account_name=%s",
+                "检测到需要输入短信验证码 account_id=%s account_name=%s",
                 account.get("id"),
                 account.get("account_name"),
             )
             to = str(account.get("email") or "").strip()
             if to:
                 logger.info(
-                    "sending sms verification alert email account_id=%s to=%s",
+                    "发送短信验证码提醒邮件 account_id=%s to=%s",
                     account.get("id"),
                     to,
                 )
@@ -622,14 +621,14 @@ class JDAuthenticator:
         for selector in _BEHAVIOR_CAPTCHA_SELECTORS:
             try:
                 if page.locator(selector).count() > 0:
-                    logger.info("behavior captcha matched by selector=%s", selector)
+                    logger.info("通过选择器匹配到行为验证码 selector=%s", selector)
                     return True
             except Exception:
                 continue
         try:
             body_text = page.inner_text("body", timeout=2000)
             if any(mark in body_text for mark in _BEHAVIOR_CAPTCHA_TEXT):
-                logger.info("behavior captcha matched by page text")
+                logger.info("通过页面文本匹配到行为验证码")
                 return True
         except Exception:
             pass
@@ -641,14 +640,14 @@ class JDAuthenticator:
         for selector in _SMS_VERIFICATION_SELECTORS:
             try:
                 if page.locator(selector).count() > 0:
-                    logger.info("sms verification matched by selector=%s", selector)
+                    logger.info("通过选择器匹配到短信验证码 selector=%s", selector)
                     return True
             except Exception:
                 continue
         try:
             body_text = page.inner_text("body", timeout=2000)
             if any(mark in body_text for mark in _SMS_VERIFICATION_TEXT):
-                logger.info("sms verification matched by page text")
+                logger.info("通过页面文本匹配到短信验证码")
                 return True
         except Exception:
             pass
@@ -658,7 +657,7 @@ class JDAuthenticator:
         """通过 SMTP 发送邮件通知；配置不完整或发送失败时仅记录日志。"""
         cfg = self._settings
         if not (cfg.smtp_host and cfg.smtp_username and cfg.smtp_password):
-            logger.info("SMTP not configured, skip email notification to=%s", to)
+            logger.info("SMTP 未配置，跳过邮件通知 to=%s", to)
             return
 
         now = time.time()
@@ -667,7 +666,7 @@ class JDAuthenticator:
         last_sent_at = self._last_email_sent_at.get(cache_key)
         if last_sent_at is not None and now - last_sent_at < cooldown:
             logger.info(
-                "email notification suppressed by cooldown to=%s subject=%r",
+                "邮件通知被冷却时间抑制 to=%s subject=%r",
                 to,
                 subject,
             )
@@ -681,7 +680,7 @@ class JDAuthenticator:
 
         try:
             logger.info(
-                "sending email notification to=%s subject=%r smtp_host=%s smtp_port=%s",
+                "发送邮件通知 to=%s subject=%r smtp_host=%s smtp_port=%s",
                 to,
                 subject,
                 cfg.smtp_host,
@@ -692,6 +691,6 @@ class JDAuthenticator:
                 server.login(cfg.smtp_username, cfg.smtp_password)
                 server.sendmail(sender, [to], msg.as_string())
             self._last_email_sent_at[cache_key] = now
-            logger.info("email notification sent to %s subject=%r", to, subject)
+            logger.info("邮件通知已发送 to=%s subject=%r", to, subject)
         except Exception as exc:
-            logger.warning("failed to send email notification to %s: %s", to, exc)
+            logger.warning("发送邮件通知失败 to=%s: %s", to, exc)

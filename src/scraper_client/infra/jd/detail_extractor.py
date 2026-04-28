@@ -16,7 +16,7 @@ class JDDetailExtractor:
     """
 
     def enrich(self, raw_orders: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        logger.info("start detail extraction raw_orders=%s", len(raw_orders))
+        logger.info("开始补全订单详情 raw_orders=%s", len(raw_orders))
         enriched: list[dict[str, Any]] = []
         inferred_count = 0
         embedded_detail_count = 0
@@ -36,7 +36,7 @@ class JDDetailExtractor:
             if items:
                 embedded_detail_count += 1
                 logger.info(
-                    "detail data already in list payload, skip detail page navigation order_id=%s item_count=%s",
+                    "列表数据已含商品详情，跳过详情页请求 order_id=%s item_count=%s",
                     order_id,
                     len(items),
                 )
@@ -58,7 +58,7 @@ class JDDetailExtractor:
                     }
                 ]
                 inferred_count += 1
-                logger.info("detail fallback inferred item order_id=%s", order_id)
+                logger.info("缺少商品详情，使用推断数据 order_id=%s", order_id)
             order["orderItems"] = items
 
             if not (order.get("priceInfo") or order.get("price_info") or order.get("orderPaymentInfo")):
@@ -71,7 +71,7 @@ class JDDetailExtractor:
             enriched.append(order)
 
         logger.info(
-            "detail extraction enriched_orders=%s inferred_orders=%s embedded_detail_orders=%s",
+            "订单详情补全完成 enriched_orders=%s inferred_orders=%s embedded_detail_orders=%s",
             len(enriched),
             inferred_count,
             embedded_detail_count,

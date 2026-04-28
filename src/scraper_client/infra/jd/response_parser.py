@@ -66,7 +66,7 @@ def _yuan_to_cents(value: Any) -> int | None:
             return None
         return round(float(cleaned) * 100)
     except (ValueError, TypeError):
-        logger.debug("cannot convert to cents: %r", value)
+        logger.debug("无法转换为分（金额单位）: %r", value)
         return None
 
 

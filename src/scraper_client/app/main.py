@@ -144,15 +144,15 @@ def main(argv: list[str] | None = None) -> int:
             _pause_before_exit()
         return 1
 
-    logger.info("scraper-client starting command=%s client_id=%s", args.command, settings.scraper_client_id)
+    logger.info("爬虫客户端启动 command=%s client_id=%s", args.command, settings.scraper_client_id)
     if auto_started:
-        logger.info("detected no CLI args, defaulted to 'start' mode")
+        logger.info("未检测到命令行参数，默认使用 start 模式")
     if active_profile is not None:
-        logger.info("active profile: %s", active_profile)
-    logger.info("backend base url: %s", settings.scraper_server_base_url)
-    logger.info("env file: %s exists=%s", env_file_path, env_file_path.exists())
+        logger.info("当前配置文件: %s", active_profile)
+    logger.info("后端地址: %s", settings.scraper_server_base_url)
+    logger.info("环境配置文件: %s exists=%s", env_file_path, env_file_path.exists())
     if log_path is not None:
-        logger.info("log file: %s", log_path)
+        logger.info("日志文件: %s", log_path)
         print(f"[scraper-client] running, log file: {log_path}", flush=True)
     else:
         print("[scraper-client] running", flush=True)
@@ -164,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
             orchestrator.run_forever()
             return 0
     except Exception:
-        logger.exception("fatal error, scraper-client is exiting")
+        logger.exception("发生致命错误，爬虫客户端退出")
         if auto_started:
             _pause_before_exit()
         return 1

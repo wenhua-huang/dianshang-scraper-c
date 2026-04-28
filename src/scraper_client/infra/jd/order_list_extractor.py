@@ -4,7 +4,7 @@ import logging
 import random
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from playwright.sync_api import Page, Response
 
@@ -34,6 +34,7 @@ class JDOrderListExtractor:
         max_pages: int,
         human_action_min_ms: int,
         human_action_max_ms: int,
+        on_page_orders: Callable[[list[dict[str, Any]]], None] | None = None,
     ) -> list[dict[str, Any]]:
         captured_pages: list[list[dict[str, Any]]] = []
         total_item: int | None = None
@@ -62,7 +63,7 @@ class JDOrderListExtractor:
             captured_pages.append(results)
             response_page_count += 1
             logger.info(
-                "captured order api page_index=%s page_results=%s cumulative_pages=%s total_item=%s page_size=%s url=%s",
+                "拦截到订单列表API响应 page_index=%s page_results=%s cumulative_pages=%s total_item=%s page_size=%s url=%s",
                 response_page_count,
                 len(results),
                 len(captured_pages),
@@ -70,10 +71,12 @@ class JDOrderListExtractor:
                 page_size,
                 response.url,
             )
+            if on_page_orders is not None:
+                on_page_orders(results)
 
         page.on("response", _on_response)
 
-        logger.info("opening order list page url=%s", _ORDER_LIST_ALL_URL)
+        logger.info("打开订单列表页 url=%s", _ORDER_LIST_ALL_URL)
         page.goto(_ORDER_LIST_ALL_URL, wait_until="domcontentloaded", timeout=90_000)
         if self._is_login_redirect_or_page(page):
             raise JDSessionExpiredError("redirected to login page when opening JD order list")
@@ -84,7 +87,7 @@ class JDOrderListExtractor:
         if self._is_login_redirect_or_page(page):
             raise JDSessionExpiredError("session expired before JD order list became ready")
 
-        logger.info("order list first page load wait finished")
+        logger.info("订单列表首页加载等待完成")
 
         max_pages = max(1, int(max_pages))
         pages_fetched = 1
@@ -92,15 +95,15 @@ class JDOrderListExtractor:
         while pages_fetched < max_pages:
             if total_item is not None and (pages_fetched * page_size) >= total_item:
                 logger.info(
-                    "stop pagination reached total bound pages_fetched=%s page_size=%s total_item=%s",
+                    "达到总量上限，停止翻页 pages_fetched=%s page_size=%s total_item=%s",
                     pages_fetched,
                     page_size,
                     total_item,
                 )
                 break
-            logger.info("turning page current_page=%s target_page=%s", pages_fetched, pages_fetched + 1)
+            logger.info("翻页中 current_page=%s target_page=%s", pages_fetched, pages_fetched + 1)
             if not self._goto_next_page(page):
-                logger.info("stop pagination next-page control not found current_page=%s", pages_fetched)
+                logger.info("未找到下一页控件，停止翻页 current_page=%s", pages_fetched)
                 break
             sleep_ms = random.randint(
                 max(0, human_action_min_ms),
@@ -108,7 +111,7 @@ class JDOrderListExtractor:
             )
             page.wait_for_timeout(sleep_ms + 3_000)  # extra wait for API response
             pages_fetched += 1
-            logger.info("page turn done current_page=%s wait_ms=%s", pages_fetched, sleep_ms + 3_000)
+            logger.info("翻页完成 current_page=%s wait_ms=%s", pages_fetched, sleep_ms + 3_000)
 
         page.remove_listener("response", _on_response)
 
@@ -135,6 +138,7 @@ class JDOrderListExtractor:
                 max_pages=max_pages,
                 human_action_min_ms=human_action_min_ms,
                 human_action_max_ms=human_action_max_ms,
+                on_page_orders=on_page_orders,
             )
             logger.info(
                 "dom fallback finished orders=%s pages=%s",
@@ -255,6 +259,7 @@ class JDOrderListExtractor:
         max_pages: int,
         human_action_min_ms: int,
         human_action_max_ms: int,
+        on_page_orders: Callable[[list[dict[str, Any]]], None] | None = None,
     ) -> tuple[list[dict[str, Any]], int]:
         page.goto(_ORDER_LIST_ALL_URL, wait_until="domcontentloaded", timeout=90_000)
         page.wait_for_timeout(6_000)
@@ -271,6 +276,8 @@ class JDOrderListExtractor:
                 len(page_orders),
             )
             all_orders.extend(page_orders)
+            if on_page_orders is not None and page_orders:
+                on_page_orders(page_orders)
 
             if page_index >= max_pages:
                 break
