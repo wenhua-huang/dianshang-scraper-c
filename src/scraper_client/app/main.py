@@ -5,6 +5,7 @@ import logging
 import sys
 from pathlib import Path
 
+from scraper_client import __version__
 from scraper_client.core.logging import configure_logging
 from scraper_client.core.settings import get_resolved_env_file, get_settings
 from scraper_client.core.settings import Settings
@@ -34,6 +35,7 @@ DEFAULT_SENTINELS: dict[str, str] = {
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="dianshang scraper client")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = parser.add_subparsers(dest="command")
 
     start = sub.add_parser("start", help="Run continuously and execute active accounts")
@@ -144,7 +146,7 @@ def main(argv: list[str] | None = None) -> int:
             _pause_before_exit()
         return 1
 
-    logger.info("爬虫客户端启动 command=%s client_id=%s", args.command, settings.scraper_client_id)
+    logger.info("爬虫客户端启动 version=%s command=%s client_id=%s", __version__, args.command, settings.scraper_client_id)
     if auto_started:
         logger.info("未检测到命令行参数，默认使用 start 模式")
     if active_profile is not None:
