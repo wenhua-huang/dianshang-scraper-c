@@ -92,6 +92,48 @@ class TestParseOrder:
         assert order["receiver_phone"] == "13800000000"
         assert order["receiver_address"] == "北京市"
 
+    def test_payment_confirm_time_maps_to_pay_time(self):
+        raw = {
+            "orderId": "JD-PAY-1",
+            "paymentConfirmTime": "2026-04-28 21:40:33",
+        }
+
+        order = parse_order(raw)
+
+        assert order["pay_time"] == "2026-04-28 21:40:33"
+
+    def test_dom_time_summary_extracts_create_and_pay_time(self):
+        raw = {
+            "orderId": "JD-PAY-2",
+            "orderCreateTime": "2026-04-28 21:40:20 下单，2026-04-28 21:40:33 付款",
+        }
+
+        order = parse_order(raw)
+
+        assert order["platform_create_time"] == "2026-04-28 21:40:20"
+        assert order["pay_time"] == "2026-04-28 21:40:33"
+        assert order["platform_update_time"] == "2026-04-28 21:40:33"
+
+    def test_text_status_is_normalized_for_jingdong(self):
+        raw = {
+            "orderId": "JD-TEXT-1",
+            "orderStatusInfo": {"orderStatus": "待出库"},
+        }
+
+        order = parse_order(raw)
+
+        assert order["status"] == "1"
+
+    def test_closed_text_status_maps_to_closed_code(self):
+        raw = {
+            "orderId": "JD-TEXT-2",
+            "status": "订单已关闭",
+        }
+
+        order = parse_order(raw)
+
+        assert order["status"] == "-1"
+
 
 # ──────────────────────────────────────────────
 # response_parser: parse_item

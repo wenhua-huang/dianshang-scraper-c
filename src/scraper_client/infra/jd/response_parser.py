@@ -44,12 +44,36 @@ PriceInfo record
 from __future__ import annotations
 
 import logging
+import re
 from datetime import datetime, timezone
 from typing import Any
 
 from scraper_client.infra.jd.exceptions import JDParseError
 
 logger = logging.getLogger(__name__)
+
+LABELED_DATETIME_RE = re.compile(r"(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})\s*([^\d,，;；]*)")
+
+
+JD_TEXT_STATUS_CODE_MAP: tuple[tuple[str, str], ...] = (
+    ("待付款", "0"),
+    ("未付款", "0"),
+    ("待出库", "1"),
+    ("待发货", "1"),
+    ("待揽收", "1"),
+    ("已出库", "2"),
+    ("已发货", "2"),
+    ("运输中", "2"),
+    ("配送中", "2"),
+    ("待收货", "3"),
+    ("已签收", "4"),
+    ("交易完成", "4"),
+    ("已完成", "4"),
+    ("已取消", "5"),
+    ("已退款", "6"),
+    ("退款成功", "6"),
+    ("已关闭", "-1"),
+)
 
 
 def _yuan_to_cents(value: Any) -> int | None:
@@ -113,6 +137,46 @@ def _normalize_datetime(value: Any) -> str | None:
     return dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
+def _normalize_jd_status(value: Any) -> str:
+    """Normalize JD status values to backend-recognized raw status codes.
+
+    JD list pages often expose Chinese text states such as "待出库" while the
+    backend currently maps JD raw statuses using numeric codes.
+    """
+    if value is None:
+        return ""
+
+    status = str(value).strip()
+    if not status:
+        return ""
+
+    if status in {"-1", "0", "1", "2", "3", "4", "5", "6"}:
+        return status
+
+    for text, code in JD_TEXT_STATUS_CODE_MAP:
+        if text in status:
+            return code
+
+    return status
+
+
+def _extract_labeled_datetime(value: Any, *labels: str) -> str | None:
+    """Extract a datetime preceding any of the given labels from mixed UI text."""
+    if value is None:
+        return None
+
+    text = str(value).strip()
+    if not text:
+        return None
+
+    for match in LABELED_DATETIME_RE.finditer(text):
+        dt_text = match.group(1)
+        suffix = match.group(2).strip()
+        if any(label in suffix for label in labels):
+            return _normalize_datetime(dt_text)
+    return None
+
+
 def parse_order(raw: dict[str, Any]) -> dict[str, Any]:
     """Parse a single raw JD order dict into the backend order record.
 
@@ -125,7 +189,7 @@ def parse_order(raw: dict[str, Any]) -> dict[str, Any]:
 
     # --- status ---
     status_info = raw.get("orderStatusInfo") or {}
-    status = str(
+    status = _normalize_jd_status(
         status_info.get("orderStatus")
         or raw.get("orderState")
         or raw.get("status")
@@ -133,12 +197,26 @@ def parse_order(raw: dict[str, Any]) -> dict[str, Any]:
     )
 
     # --- timestamps ---
-    # new API uses millisecond timestamps; legacy used ISO strings
-    create_raw = raw.get("orderCreateTime") or raw.get("orderTime") or raw.get("platform_create_time")
-    update_raw = raw.get("paymentConfirmTime") or raw.get("modifyTime") or raw.get("platform_update_time")
+    # new API uses millisecond timestamps; DOM fallback may return mixed text
+    create_source = raw.get("orderCreateTime") or raw.get("orderTime") or raw.get("platform_create_time")
+    pay_source = (
+        raw.get("paymentConfirmTime")
+        or raw.get("payTime")
+        or raw.get("paymentTime")
+        or raw.get("pay_time")
+        or create_source
+    )
+    update_source = raw.get("modifyTime") or raw.get("platform_update_time") or raw.get("paymentConfirmTime")
 
-    platform_create_time = _normalize_datetime(create_raw)
-    platform_update_time = _normalize_datetime(update_raw)
+    platform_create_time = (
+        _extract_labeled_datetime(create_source, "下单", "创建")
+        or _normalize_datetime(create_source)
+    )
+    pay_time = (
+        _extract_labeled_datetime(pay_source, "付款", "支付")
+        or _normalize_datetime(pay_source)
+    )
+    platform_update_time = _normalize_datetime(update_source) or pay_time
 
     # Backend columns are NOT NULL; fall back to keep insert compatible.
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
@@ -191,6 +269,7 @@ def parse_order(raw: dict[str, Any]) -> dict[str, Any]:
         "receiver_name": receiver_name,
         "receiver_phone": receiver_phone,
         "receiver_address": receiver_address,
+        "pay_time": pay_time,
         "raw_data": raw,
     }
 
