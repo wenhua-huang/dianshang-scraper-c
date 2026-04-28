@@ -83,7 +83,7 @@ jobs:
             }
 
             New-Item -ItemType Directory -Force -Path $pkgDir | Out-Null
-            Copy-Item -Path "dist/scraper-client.exe" -Destination "$pkgDir/scraper-client.exe" -Force
+            Copy-Item -Path "dist/scraper-client.exe" -Destination "$pkgDir/scraper-client-$target.exe" -Force
             Copy-Item -Path ".env.example" -Destination "$pkgDir/.env.example" -Force
             Copy-Item -Path ".env.example" -Destination "$pkgDir/env.example" -Force
             Copy-Item -Path $targetEnvFile -Destination "$pkgDir/$targetEnvFile" -Force
@@ -98,7 +98,7 @@ jobs:
           $targets = $env:PACKAGE_TARGETS -split ","
           foreach ($target in $targets) {
             $pkgDir = "package/scraper-client-$env:VERSION-windows-x86_64-$target"
-            $exe = "./$pkgDir/scraper-client.exe"
+            $exe = "./$pkgDir/scraper-client-$target.exe"
             & $exe --help
 
             $env:SCRAPER_SERVER_BASE_URL = "http://127.0.0.1:8000/api/v1"
@@ -106,7 +106,7 @@ jobs:
             $env:PLAYWRIGHT_CDP_URL = "http://127.0.0.1:9222"
             $env:SCRAPER_SKIP_BACKEND_CHECK = "1"
             $env:SCRAPER_ENV_FILE = ".env.$target"
-            & $exe start --help
+            & $exe start-$target --help
           }
 
       - name: Upload artifact (test)

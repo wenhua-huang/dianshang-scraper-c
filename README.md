@@ -107,7 +107,7 @@ GitHub Actions artifact name also includes the target suffix:
 - `scraper-client-{version}-windows-x86_64-prod`
 
 Package layout in artifact:
-- `scraper-client-{version}-windows-x86_64-{target}/scraper-client.exe`
+- `scraper-client-{version}-windows-x86_64-{target}/scraper-client-{target}.exe`
 - `scraper-client-{version}-windows-x86_64-{target}/.env.{target}`
 - `scraper-client-{version}-windows-x86_64-{target}/env.{target}`
 - `scraper-client-{version}-windows-x86_64-{target}/.package-env`
@@ -115,7 +115,8 @@ Package layout in artifact:
 - `scraper-client-{version}-windows-x86_64-{target}/.env.example`
 - `scraper-client-{version}-windows-x86_64-{target}/env.example`
 
-`scraper-client.exe` will auto-detect `.package-env`/`package-env` and load `.env.test`/`env.test` or `.env.prod`/`env.prod` accordingly.
+`scraper-client-{target}.exe` will auto-activate the corresponding built-in profile by executable name (`-test` or `-prod`).
+If env files are also provided, they can still override defaults.
 
 ### Run on Windows
 
@@ -130,15 +131,15 @@ Package layout in artifact:
 5. Start client:
 
 ```powershell
-.\scraper-client-{version}-windows-x86_64-{target}\scraper-client.exe
+.\scraper-client-{version}-windows-x86_64-{target}\scraper-client-{target}.exe
 ```
 
-也可以双击 `scraper-client.exe` 启动（无参数时默认进入 `start` 模式）。
+也可以双击 `scraper-client-{target}.exe` 启动（无参数时默认进入 `start` 模式并按文件名切环境）。
 
 命令行方式启动（效果相同）：
 
 ```powershell
-.\scraper-client-{version}-windows-x86_64-{target}\scraper-client.exe start
+.\scraper-client-{version}-windows-x86_64-{target}\scraper-client-{target}.exe start-{target}
 ```
 
 Runtime logs are written to:
