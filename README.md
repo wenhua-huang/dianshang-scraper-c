@@ -109,10 +109,13 @@ GitHub Actions artifact name also includes the target suffix:
 Package layout in artifact:
 - `scraper-client-{version}-windows-x86_64-{target}/scraper-client.exe`
 - `scraper-client-{version}-windows-x86_64-{target}/.env.{target}`
+- `scraper-client-{version}-windows-x86_64-{target}/env.{target}`
 - `scraper-client-{version}-windows-x86_64-{target}/.package-env`
+- `scraper-client-{version}-windows-x86_64-{target}/package-env`
 - `scraper-client-{version}-windows-x86_64-{target}/.env.example`
+- `scraper-client-{version}-windows-x86_64-{target}/env.example`
 
-`scraper-client.exe` will auto-detect `.package-env` and load `.env.test` or `.env.prod` accordingly.
+`scraper-client.exe` will auto-detect `.package-env`/`package-env` and load `.env.test`/`env.test` or `.env.prod`/`env.prod` accordingly.
 
 ### Run on Windows
 

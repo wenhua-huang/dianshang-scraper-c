@@ -85,8 +85,11 @@ jobs:
             New-Item -ItemType Directory -Force -Path $pkgDir | Out-Null
             Copy-Item -Path "dist/scraper-client.exe" -Destination "$pkgDir/scraper-client.exe" -Force
             Copy-Item -Path ".env.example" -Destination "$pkgDir/.env.example" -Force
+            Copy-Item -Path ".env.example" -Destination "$pkgDir/env.example" -Force
             Copy-Item -Path $targetEnvFile -Destination "$pkgDir/$targetEnvFile" -Force
+            Copy-Item -Path $targetEnvFile -Destination "$pkgDir/env.$target" -Force
             Set-Content -Path "$pkgDir/.package-env" -Value $target -NoNewline
+            Set-Content -Path "$pkgDir/package-env" -Value $target -NoNewline
           }
 
       - name: Smoke check

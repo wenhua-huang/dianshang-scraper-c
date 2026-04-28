@@ -21,19 +21,23 @@ def get_resolved_env_file() -> Path:
         return explicit_path
 
     package_env_marker = runtime_dir / ".package-env"
+    if not package_env_marker.exists():
+        package_env_marker = runtime_dir / "package-env"
     if package_env_marker.exists():
         package_env = package_env_marker.read_text(encoding="utf-8").strip().lower()
         if package_env == "test":
-            marker_env = runtime_dir / ".env.test"
-            if marker_env.exists():
-                return marker_env
+            for marker_name in (".env.test", "env.test"):
+                marker_env = runtime_dir / marker_name
+                if marker_env.exists():
+                    return marker_env
         if package_env == "prod":
-            marker_env = runtime_dir / ".env.prod"
-            if marker_env.exists():
-                return marker_env
+            for marker_name in (".env.prod", "env.prod"):
+                marker_env = runtime_dir / marker_name
+                if marker_env.exists():
+                    return marker_env
 
     # Fallback for copied/moved package folders where .package-env may be missing.
-    for candidate in (".env", ".env.test", ".env.prod"):
+    for candidate in (".env", "env", ".env.test", "env.test", ".env.prod", "env.prod"):
         candidate_path = runtime_dir / candidate
         if candidate_path.exists():
             return candidate_path
