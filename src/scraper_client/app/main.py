@@ -90,6 +90,14 @@ def _apply_profile_defaults(settings: Settings, profile: str | None) -> None:
             setattr(settings, field, profile_value)
 
 
+def _is_using_default_core_config(settings: Settings) -> bool:
+    return (
+        settings.scraper_server_base_url == DEFAULT_SENTINELS["scraper_server_base_url"]
+        and settings.scraper_internal_api_key == DEFAULT_SENTINELS["scraper_internal_api_key"]
+        and settings.scraper_client_id == DEFAULT_SENTINELS["scraper_client_id"]
+    )
+
+
 def _pause_before_exit() -> None:
     try:
         input("\n启动失败，请按回车键退出...\n")
@@ -111,6 +119,17 @@ def main(argv: list[str] | None = None) -> int:
         settings = get_settings()
         active_profile = _infer_profile_from_command(args.command) or _infer_profile_from_executable()
         _apply_profile_defaults(settings, active_profile)
+
+        # Hard fallback: when no env file exists and no profile is inferred,
+        # avoid localhost/default placeholders by switching to TEST profile.
+        if (
+            active_profile is None
+            and args.command == "start"
+            and not env_file_path.exists()
+            and _is_using_default_core_config(settings)
+        ):
+            active_profile = "test"
+            _apply_profile_defaults(settings, active_profile)
 
         if args.command in {"start", "start-test", "start-prod"}:
             if args.poll_interval is not None:
