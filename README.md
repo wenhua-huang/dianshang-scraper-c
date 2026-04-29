@@ -7,8 +7,9 @@ CDP-only scraper client for the dianshang backend internal scraper APIs.
 - Pull active shop accounts from backend
 - Execute scraping via CDP-connected browser
 - Upload orders/items/price_info results
+- Upload aftersales results (JD)
 - Upload run logs with order_count
-- Native JINGDONG pipeline (session manager, login fallback, order+item+price parsing)
+- Native JINGDONG pipeline (session manager, login fallback, order+item+price+aftersale parsing)
 - Persistent account session state under `artifacts/storage/`
 
 ## Quick Start
@@ -83,6 +84,8 @@ Behavior:
 	- Later runs: reuses persisted session automatically.
 	- Session invalid: raises explicit error and requires manual intervention.
 - Scrape config delivered by server is respected: `human_action_min_ms`, `human_action_max_ms`, `scrape_max_pages`.
+- JD aftersale config is independently supported: `aftersale_max_pages`.
+- Order and aftersale are executed in the same task round. Even when order stage fails, aftersale stage will still run.
 - Stop with Ctrl+C or SIGTERM; the current account is finalized before exit.
 
 ## Release
@@ -155,8 +158,12 @@ Note: for packaged EXE, the `logs` directory is created next to `scraper-client.
 For each task execution:
 
 - Successful scrape uploads `/internal/scraper/results/upload` first.
-- Then uploads `/internal/scraper/logs/upload` with `run_status=SUCCESS`.
-- If scraping fails, it still uploads `/internal/scraper/logs/upload` with `run_status=FAILED` and `error_message`.
+- Then uploads JD aftersales to `/internal/scraper/aftersales/upload` (batched, same style as order stream upload).
+- Finally uploads `/internal/scraper/logs/upload`:
+	- `run_status=SUCCESS`: both order and aftersale succeed
+	- `run_status=PARTIAL`: one stage failed but the other succeeded
+	- `run_status=FAILED`: both stages failed
+	- `error_message` includes stage-specific summary (`order_error`, `aftersale_error`) when present
 
 This behavior is implemented in `AccountOrchestrator.execute_task` and keeps backend run-history complete.
 

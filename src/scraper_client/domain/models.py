@@ -18,6 +18,7 @@ class ShopAccountInfo:
     human_action_min_ms: int = 1000
     human_action_max_ms: int = 5000
     scrape_max_pages: int = 10
+    aftersale_max_pages: int = 10
 
 
 @dataclass(slots=True)
@@ -25,6 +26,7 @@ class ScrapeConfig:
     human_action_min_ms: int = 800
     human_action_max_ms: int = 2200
     max_pages: int = 5
+    aftersale_max_pages: int = 5
 
 
 @dataclass(slots=True)
@@ -35,6 +37,12 @@ class UploadResultCounts:
     items_updated: int = 0
     price_info_inserted: int = 0
     price_info_updated: int = 0
+
+
+@dataclass(slots=True)
+class UploadAftersaleCounts:
+    aftersales_inserted: int = 0
+    aftersales_updated: int = 0
 
 
 @dataclass(slots=True)

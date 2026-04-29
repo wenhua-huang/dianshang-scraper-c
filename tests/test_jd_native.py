@@ -8,6 +8,7 @@ from scraper_client.infra.jd.exceptions import JDParseError
 from scraper_client.infra.jd.jd_scraper import JDScraper
 from scraper_client.infra.jd.response_parser import (
     _yuan_to_cents,
+    parse_aftersale,
     parse_item,
     parse_order,
     parse_price_info,
@@ -187,6 +188,37 @@ class TestParsePriceInfo:
 
 
 # ──────────────────────────────────────────────
+# response_parser: parse_aftersale
+# ──────────────────────────────────────────────
+
+
+class TestParseAftersale:
+    def test_prefers_dedicated_aftersale_status_name_over_generic_status(self):
+        raw = {
+            "afterSaleId": "37185589593",
+            "orderId": "JD-ORDER-1",
+            "afterSaleStatusName": "用户申请",
+            "status": "完成",
+        }
+
+        aftersale = parse_aftersale(raw)
+
+        assert aftersale["outer_aftersale_id"] == "37185589593"
+        assert aftersale["status"] == "用户申请"
+
+    def test_falls_back_to_generic_status_when_dedicated_status_absent(self):
+        raw = {
+            "afterSaleId": "A-2",
+            "orderId": "JD-ORDER-2",
+            "status": "完成",
+        }
+
+        aftersale = parse_aftersale(raw)
+
+        assert aftersale["status"] == "完成"
+
+
+# ──────────────────────────────────────────────
 # ScrapeExecutor routing
 # ──────────────────────────────────────────────
 
@@ -214,6 +246,19 @@ class TestScrapeExecutorRouting:
         assert isinstance(items, list)
         assert isinstance(price_info, list)
 
+    def test_jingdong_aftersales_routes_to_jd_scraper(self, monkeypatch):
+        from scraper_client.core.settings import Settings
+
+        monkeypatch.setattr(JDScraper, "scrape_aftersales", lambda self, *_args, **_kwargs: [{"outer_aftersale_id": "A1"}])
+
+        executor = ScrapeExecutor(Settings())
+        aftersales = executor.execute_aftersales(
+            {"id": 1, "account_name": "test"},
+            "JINGDONG",
+        )
+        assert isinstance(aftersales, list)
+        assert aftersales[0]["outer_aftersale_id"] == "A1"
+
 
 class TestJDDetailExtractor:
     def test_enrich_builds_fallback_items_and_price(self):
@@ -233,3 +278,18 @@ class TestJDScrapeConfig:
         assert cfg["scrape_max_pages"] == 7
         assert cfg["human_action_min_ms"] == 11
         assert cfg["human_action_max_ms"] == 22
+
+    def test_aftersale_max_pages_supports_new_key(self):
+        from scraper_client.core.settings import Settings
+
+        scraper = JDScraper(Settings())
+        cfg = scraper.scrape_config_from(
+            {
+                "scrape_max_pages": 7,
+                "aftersale_max_pages": 13,
+                "human_action_min_ms": 11,
+                "human_action_max_ms": 22,
+            }
+        )
+        assert cfg["scrape_max_pages"] == 7
+        assert cfg["aftersale_max_pages"] == 13

@@ -123,3 +123,50 @@ def test_jd_scraper_streams_batches_after_each_threshold():
     assert len(orders) == 5
     assert len(items) == 5
     assert len(price_info) == 5
+
+
+class _FakeExecutorWithOrderFailure:
+    def execute_account(self, *_args, **_kwargs):
+        raise RuntimeError("order stage failed")
+
+    def execute_aftersales(self, *_args, **_kwargs):
+        return [{"outer_aftersale_id": "AS-1"}]
+
+
+class _FakeLogUploader:
+    def __init__(self) -> None:
+        self.calls: list[dict] = []
+
+    def upload(self, **kwargs) -> None:
+        self.calls.append(kwargs)
+
+
+def test_execute_task_always_runs_aftersales_when_orders_fail():
+    orchestrator = AccountOrchestrator(Settings())
+    orchestrator.executor = _FakeExecutorWithOrderFailure()
+    orchestrator.aftersale_uploader = _FakeResultUploader()
+    fake_log_uploader = _FakeLogUploader()
+    orchestrator.log_uploader = fake_log_uploader
+
+    task = {
+        "id": 123,
+        "shop_id": 88,
+        "platform": "JINGDONG",
+        "account_name": "acc",
+        "account_password": "pwd",
+        "phone": "13800000000",
+        "email": None,
+        "human_action_min_ms": 100,
+        "human_action_max_ms": 200,
+        "scrape_max_pages": 2,
+        "aftersale_max_pages": 3,
+        "current_round": 9,
+    }
+
+    orchestrator.execute_task(task)
+
+    assert len(orchestrator.aftersale_uploader.calls) == 0
+    assert len(fake_log_uploader.calls) == 1
+    call = fake_log_uploader.calls[0]
+    assert call["run_status"] == "PARTIAL"
+    assert call["log_data"]["aftersale_count"] == 1

@@ -53,6 +53,7 @@ from scraper_client.infra.jd.exceptions import JDParseError
 logger = logging.getLogger(__name__)
 
 LABELED_DATETIME_RE = re.compile(r"(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})\s*([^\d,，;；]*)")
+GENERIC_DATETIME_RE = re.compile(r"(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})")
 
 
 JD_TEXT_STATUS_CODE_MAP: tuple[tuple[str, str], ...] = (
@@ -175,6 +176,32 @@ def _extract_labeled_datetime(value: Any, *labels: str) -> str | None:
         if any(label in suffix for label in labels):
             return _normalize_datetime(dt_text)
     return None
+
+
+def _extract_first_datetime(value: Any) -> str | None:
+    """Extract the first datetime from mixed text (DOM fallback payloads)."""
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    match = GENERIC_DATETIME_RE.search(text)
+    if not match:
+        return None
+    return _normalize_datetime(match.group(1))
+
+
+def _extract_last_datetime(value: Any) -> str | None:
+    """Extract the last datetime from mixed text (often the latest operation time)."""
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    matches = GENERIC_DATETIME_RE.findall(text)
+    if not matches:
+        return None
+    return _normalize_datetime(matches[-1])
 
 
 def parse_order(raw: dict[str, Any]) -> dict[str, Any]:
@@ -353,4 +380,121 @@ def parse_price_info(outer_order_id: str, raw: dict[str, Any]) -> dict[str, Any]
             )
         ),
         "extra_data": raw,
+    }
+
+
+def parse_aftersale(raw: dict[str, Any]) -> dict[str, Any]:
+    """Parse a single raw JD aftersale dict into backend aftersales record."""
+    outer_aftersale_id = str(
+        raw.get("afterSaleId")
+        or raw.get("aftersaleId")
+        or raw.get("outer_aftersale_id")
+        or raw.get("serviceId")
+        or raw.get("id")
+        or raw.get("after_sale_id")
+        or ""
+    ).strip()
+    if not outer_aftersale_id:
+        raise JDParseError(f"missing aftersale id in raw payload: {list(raw.keys())}")
+
+    outer_order_id = str(
+        raw.get("orderId")
+        or raw.get("orderNo")
+        or raw.get("outer_order_id")
+        or raw.get("parentOrderId")
+        or raw.get("afterSaleOrderId")
+        or ""
+    ).strip()
+
+    raw_type = str(
+        raw.get("afterSaleTypeName")
+        or raw.get("aftersaleTypeName")
+        or raw.get("serviceTypeName")
+        or raw.get("afterSaleType")
+        or raw.get("aftersaleType")
+        or raw.get("serviceType")
+        or raw.get("type")
+        or "UNKNOWN"
+    ).strip() or "UNKNOWN"
+
+    # JD payloads may carry a generic "status" field (for parent order or flow)
+    # that conflicts with the actual aftersale status. Prefer explicit aftersale
+    # status name/desc fields first, then fall back to generic status.
+    raw_status = str(
+        raw.get("afterSaleStatusName")
+        or raw.get("afterSaleStatusDesc")
+        or raw.get("aftersaleStatusName")
+        or raw.get("aftersaleStatusDesc")
+        or raw.get("serviceStatusName")
+        or raw.get("serviceStatusDesc")
+        or raw.get("after_sale_text")
+        or raw.get("aftersale_status_class_string")
+        or raw.get("afterSaleStatus")
+        or raw.get("aftersaleStatus")
+        or raw.get("statusName")
+        or raw.get("statusDesc")
+        or raw.get("status")
+        or "UNKNOWN"
+    ).strip() or "UNKNOWN"
+
+    refund_amount = (
+        _yuan_to_cents(raw.get("refundAmount"))
+        or _yuan_to_cents(raw.get("refund_amount"))
+        or _yuan_to_cents(raw.get("refundPrice"))
+        or _yuan_to_cents(raw.get("applyAmount"))
+        or 0
+    )
+
+    sku_info = {}
+    if isinstance(raw.get("skuInfos"), list) and raw.get("skuInfos"):
+        first = raw.get("skuInfos")[0]
+        if isinstance(first, dict):
+            sku_info = first
+
+    text_source = raw.get("raw_text") or raw.get("text") or raw.get("content")
+    text_time_first = _extract_first_datetime(text_source)
+    text_time_last = _extract_last_datetime(text_source)
+
+    platform_create_time = _normalize_datetime(
+        raw.get("createTime")
+        or raw.get("create_time")
+        or raw.get("applyTime")
+        or raw.get("apply_time")
+    ) or text_time_first or text_time_last
+    platform_update_time = _normalize_datetime(
+        raw.get("updateTime")
+        or raw.get("modifiedTime")
+        or raw.get("update_time")
+    ) or text_time_last or text_time_first
+    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    if platform_create_time is None:
+        platform_create_time = platform_update_time or now_utc
+    if platform_update_time is None:
+        platform_update_time = platform_create_time
+
+    return {
+        "outer_aftersale_id": outer_aftersale_id,
+        "outer_order_id": outer_order_id,
+        "type": raw_type,
+        "status": raw_status,
+        "refund_amount": refund_amount,
+        "reason": raw.get("reason") or raw.get("applyReason") or raw.get("afterSaleReason"),
+        "description": raw.get("description") or raw.get("remark") or raw.get("desc"),
+        "product_id": str(
+            raw.get("skuId")
+            or raw.get("productId")
+            or sku_info.get("skuId")
+            or sku_info.get("wareId")
+            or ""
+        )
+        or None,
+        "product_name": raw.get("skuName") or raw.get("productName") or sku_info.get("skuName"),
+        "sku_id": str(raw.get("subSkuId") or raw.get("skuId") or sku_info.get("skuId") or "") or None,
+        "sku_name": raw.get("subSkuName") or raw.get("skuName") or sku_info.get("skuName"),
+        "platform_create_time": platform_create_time,
+        "platform_update_time": platform_update_time,
+        "returned_to_vendor": 1
+        if bool(raw.get("returned_to_vendor") or raw.get("returnedToVendor") or False)
+        else 0,
+        "raw_data": raw,
     }

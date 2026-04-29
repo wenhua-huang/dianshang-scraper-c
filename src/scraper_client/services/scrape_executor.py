@@ -30,3 +30,19 @@ class ScrapeExecutor:
             return self._jd_scraper.scrape(account, scrape_config, on_batch_ready=on_batch_ready)
 
         raise UnsupportedPlatformError(f"unsupported platform: {platform}")
+
+    def execute_aftersales(
+        self,
+        account: dict[str, Any],
+        platform: str,
+        scrape_config: dict[str, Any] | None = None,
+        on_batch_ready: Callable[[list[dict[str, Any]]], None] | None = None,
+    ) -> list[dict[str, Any]]:
+        if platform == "JINGDONG":
+            return self._jd_scraper.scrape_aftersales(
+                account,
+                scrape_config,
+                on_batch_ready=on_batch_ready,
+            )
+
+        raise UnsupportedPlatformError(f"unsupported platform: {platform}")

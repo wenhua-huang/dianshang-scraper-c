@@ -10,6 +10,7 @@ from typing import Any, Callable
 from scraper_client.core.settings import Settings
 from scraper_client.domain.models import ShopAccountInfo
 from scraper_client.infra.server.internal_api_client import InternalApiClient
+from scraper_client.services.aftersale_uploader import AftersaleUploader
 from scraper_client.services.result_uploader import ResultUploader
 from scraper_client.services.run_log_uploader import RunLogUploader
 from scraper_client.services.scrape_executor import ScrapeExecutor
@@ -26,6 +27,7 @@ class AccountOrchestrator:
         )
         self.executor = ScrapeExecutor(settings)
         self.result_uploader = ResultUploader(self.api_client)
+        self.aftersale_uploader = AftersaleUploader(self.api_client)
         self.log_uploader = RunLogUploader(self.api_client)
         self._shutdown_requested = False
 
@@ -185,12 +187,81 @@ class AccountOrchestrator:
 
         return _handle_batch
 
+    def _upload_aftersale_batch(
+        self,
+        *,
+        round_no: int,
+        platform: str,
+        shop_account_id: int,
+        client_id: str,
+        aftersales: list[dict[str, Any]],
+    ) -> None:
+        if not aftersales:
+            logger.info(
+                "售后批次上传跳过（无售后）account_id=%s round=%s",
+                shop_account_id,
+                round_no,
+            )
+            return
+
+        self.aftersale_uploader.upload(
+            round_no=round_no,
+            platform=platform,
+            shop_account_id=shop_account_id,
+            client_id=client_id,
+            aftersales=aftersales,
+        )
+
+    @staticmethod
+    def _build_aftersale_batch_logger(*, shop_account_id: int, round_no: int) -> Callable[[list[dict[str, Any]]], None]:
+        batch_num = 0
+        uploaded_aftersales = 0
+
+        def _log_batch(aftersales: list[dict[str, Any]]) -> None:
+            nonlocal batch_num, uploaded_aftersales
+            batch_num += 1
+            uploaded_aftersales += len(aftersales)
+            logger.info(
+                "售后批次上传成功 batch_num=%s batch_aftersales=%s cumulative_aftersales=%s account_id=%s round=%s",
+                batch_num,
+                len(aftersales),
+                uploaded_aftersales,
+                shop_account_id,
+                round_no,
+            )
+
+        return _log_batch
+
+    def _build_aftersale_stream_upload_handler(
+        self,
+        *,
+        round_no: int,
+        platform: str,
+        shop_account_id: int,
+        client_id: str,
+    ) -> Callable[[list[dict[str, Any]]], None]:
+        log_batch = self._build_aftersale_batch_logger(shop_account_id=shop_account_id, round_no=round_no)
+
+        def _handle_batch(aftersales: list[dict[str, Any]]) -> None:
+            self._upload_aftersale_batch(
+                round_no=round_no,
+                platform=platform,
+                shop_account_id=shop_account_id,
+                client_id=client_id,
+                aftersales=aftersales,
+            )
+            log_batch(aftersales)
+
+        return _handle_batch
+
     def execute_account(self, account: ShopAccountInfo) -> None:
         """Legacy method for backward compatibility. Use execute_task instead."""
         account_dict = asdict(account)
         round_no = account.current_round if hasattr(account, 'current_round') else max(1, int(account.latest_round_no or 0) + 1)
-        error_message: str | None = None
+        order_error: str | None = None
+        aftersale_error: str | None = None
         order_count = 0
+        aftersale_count = 0
 
         try:
             upload_batch_size = random.randint(20, 50)
@@ -200,60 +271,95 @@ class AccountOrchestrator:
                 account.id,
                 round_no,
             )
-            orders, items, price_info = self.executor.execute_account(
-                account_dict,
-                account.platform,
-                scrape_config={
-                    "human_action_min_ms": account.human_action_min_ms,
-                    "human_action_max_ms": account.human_action_max_ms,
-                    "scrape_max_pages": account.scrape_max_pages,
-                    "max_pages": account.scrape_max_pages,
-                    "upload_batch_size": upload_batch_size,
-                },
-                on_batch_ready=self._build_stream_upload_handler(
-                    round_no=round_no,
-                    platform=account.platform,
-                    shop_account_id=account.id,
-                    client_id=self.settings.scraper_client_id,
-                ),
-            )
-            order_count = len(orders)
+            base_scrape_config = {
+                "human_action_min_ms": account.human_action_min_ms,
+                "human_action_max_ms": account.human_action_max_ms,
+                "scrape_max_pages": account.scrape_max_pages,
+                "aftersale_max_pages": account.aftersale_max_pages,
+                "max_pages": account.scrape_max_pages,
+                "upload_batch_size": upload_batch_size,
+            }
+
+            try:
+                orders, items, price_info = self.executor.execute_account(
+                    account_dict,
+                    account.platform,
+                    scrape_config=base_scrape_config,
+                    on_batch_ready=self._build_stream_upload_handler(
+                        round_no=round_no,
+                        platform=account.platform,
+                        shop_account_id=account.id,
+                        client_id=self.settings.scraper_client_id,
+                    ),
+                )
+                order_count = len(orders)
+                logger.info("账号订单抓取成功 account_id=%s orders=%s", account.id, order_count)
+            except Exception as exc:
+                order_error = str(exc)[:500]
+                logger.exception("账号订单抓取失败，继续执行售后抓取 account_id=%s", account.id)
+
+            try:
+                aftersales = self.executor.execute_aftersales(
+                    account_dict,
+                    account.platform,
+                    scrape_config=base_scrape_config,
+                    on_batch_ready=self._build_aftersale_stream_upload_handler(
+                        round_no=round_no,
+                        platform=account.platform,
+                        shop_account_id=account.id,
+                        client_id=self.settings.scraper_client_id,
+                    ),
+                )
+                aftersale_count = len(aftersales)
+                logger.info("账号售后抓取成功 account_id=%s aftersales=%s", account.id, aftersale_count)
+            except Exception as exc:
+                aftersale_error = str(exc)[:500]
+                logger.exception("账号售后抓取失败 account_id=%s", account.id)
+
+            run_status = "SUCCESS"
+            if order_error and aftersale_error:
+                run_status = "FAILED"
+            elif order_error or aftersale_error:
+                run_status = "PARTIAL"
+
+            error_message = None
+            if order_error or aftersale_error:
+                error_message = "; ".join(
+                    part
+                    for part in [
+                        f"order_error={order_error}" if order_error else None,
+                        f"aftersale_error={aftersale_error}" if aftersale_error else None,
+                    ]
+                    if part
+                )[:500]
 
             self.log_uploader.upload(
                 round_no=round_no,
                 platform=account.platform,
                 shop_account_id=account.id,
                 client_id=self.settings.scraper_client_id,
-                run_status="SUCCESS",
+                run_status=run_status,
                 order_count=order_count,
-                log_data={"account_id": account.id},
+                error_message=error_message,
+                log_data={
+                    "account_id": account.id,
+                    "order_count": order_count,
+                    "aftersale_count": aftersale_count,
+                    "order_error": order_error,
+                    "aftersale_error": aftersale_error,
+                },
             )
-
-            logger.info("账号抓取成功 account_id=%s orders=%s", account.id, order_count)
-        except Exception as exc:
-            error_message = str(exc)[:500]
-            logger.exception("账号抓取失败 account_id=%s", account.id)
-
-            try:
-                self.log_uploader.upload(
-                    round_no=round_no,
-                    platform=account.platform,
-                    shop_account_id=account.id,
-                    client_id=self.settings.scraper_client_id,
-                    run_status="FAILED",
-                    order_count=order_count,
-                    error_message=error_message,
-                    log_data={"account_id": account.id},
-                )
-            except Exception:
-                logger.exception("上传运行日志失败 account_id=%s", account.id)
+        except Exception:
+            logger.exception("上传运行日志失败 account_id=%s", account.id)
 
     def execute_task(self, task: dict) -> None:
         """Execute scraping task from backend /task endpoint."""
         account_id = task.get("id")
         round_no = task.get("current_round", 1)
-        error_message: str | None = None
+        order_error: str | None = None
+        aftersale_error: str | None = None
         order_count = 0
+        aftersale_count = 0
 
         try:
             upload_batch_size = random.randint(20, 50)
@@ -277,52 +383,85 @@ class AccountOrchestrator:
                 "human_action_min_ms": task.get("human_action_min_ms", 1000),
                 "human_action_max_ms": task.get("human_action_max_ms", 5000),
                 "scrape_max_pages": task.get("scrape_max_pages", 10),
+                "aftersale_max_pages": task.get("aftersale_max_pages", task.get("scrape_max_pages", 10)),
+            }
+            scrape_config = {
+                "human_action_min_ms": task.get("human_action_min_ms", 1000),
+                "human_action_max_ms": task.get("human_action_max_ms", 5000),
+                "scrape_max_pages": task.get("scrape_max_pages", 10),
+                "aftersale_max_pages": task.get("aftersale_max_pages", task.get("scrape_max_pages", 10)),
+                "max_pages": task.get("scrape_max_pages", 10),
+                "upload_batch_size": upload_batch_size,
             }
 
-            orders, items, price_info = self.executor.execute_account(
-                account_dict,
-                task.get("platform"),
-                scrape_config={
-                    "human_action_min_ms": task.get("human_action_min_ms", 1000),
-                    "human_action_max_ms": task.get("human_action_max_ms", 5000),
-                    "scrape_max_pages": task.get("scrape_max_pages", 10),
-                    "max_pages": task.get("scrape_max_pages", 10),
-                    "upload_batch_size": upload_batch_size,
-                },
-                on_batch_ready=self._build_stream_upload_handler(
-                    round_no=round_no,
-                    platform=task.get("platform"),
-                    shop_account_id=account_id,
-                    client_id=self.settings.scraper_client_id,
-                ),
-            )
-            order_count = len(orders)
+            try:
+                orders, items, price_info = self.executor.execute_account(
+                    account_dict,
+                    task.get("platform"),
+                    scrape_config=scrape_config,
+                    on_batch_ready=self._build_stream_upload_handler(
+                        round_no=round_no,
+                        platform=task.get("platform"),
+                        shop_account_id=account_id,
+                        client_id=self.settings.scraper_client_id,
+                    ),
+                )
+                order_count = len(orders)
+                logger.info("任务订单抓取成功 account_id=%s orders=%s round=%s", account_id, order_count, round_no)
+            except Exception as exc:
+                order_error = str(exc)[:500]
+                logger.exception("任务订单抓取失败，继续执行售后抓取 account_id=%s round=%s", account_id, round_no)
+
+            try:
+                aftersales = self.executor.execute_aftersales(
+                    account_dict,
+                    task.get("platform"),
+                    scrape_config=scrape_config,
+                    on_batch_ready=self._build_aftersale_stream_upload_handler(
+                        round_no=round_no,
+                        platform=task.get("platform"),
+                        shop_account_id=account_id,
+                        client_id=self.settings.scraper_client_id,
+                    ),
+                )
+                aftersale_count = len(aftersales)
+                logger.info("任务售后抓取成功 account_id=%s aftersales=%s round=%s", account_id, aftersale_count, round_no)
+            except Exception as exc:
+                aftersale_error = str(exc)[:500]
+                logger.exception("任务售后抓取失败 account_id=%s round=%s", account_id, round_no)
+
+            run_status = "SUCCESS"
+            if order_error and aftersale_error:
+                run_status = "FAILED"
+            elif order_error or aftersale_error:
+                run_status = "PARTIAL"
+
+            error_message = None
+            if order_error or aftersale_error:
+                error_message = "; ".join(
+                    part
+                    for part in [
+                        f"order_error={order_error}" if order_error else None,
+                        f"aftersale_error={aftersale_error}" if aftersale_error else None,
+                    ]
+                    if part
+                )[:500]
 
             self.log_uploader.upload(
                 round_no=round_no,
                 platform=task.get("platform"),
                 shop_account_id=account_id,
                 client_id=self.settings.scraper_client_id,
-                run_status="SUCCESS",
+                run_status=run_status,
                 order_count=order_count,
-                log_data={"account_id": account_id},
+                error_message=error_message,
+                log_data={
+                    "account_id": account_id,
+                    "order_count": order_count,
+                    "aftersale_count": aftersale_count,
+                    "order_error": order_error,
+                    "aftersale_error": aftersale_error,
+                },
             )
-
-            logger.info("任务抓取成功 account_id=%s orders=%s round=%s", account_id, order_count, round_no)
-        except Exception as exc:
-            error_message = str(exc)[:500]
-            logger.exception("任务抓取失败 account_id=%s round=%s", account_id, round_no)
-
-            try:
-                self.log_uploader.upload(
-                    round_no=round_no,
-                    platform=task.get("platform"),
-                    shop_account_id=account_id,
-                    client_id=self.settings.scraper_client_id,
-                    run_status="FAILED",
-                    order_count=order_count,
-                    error_message=error_message,
-                    log_data={"account_id": account_id},
-                )
-            except Exception:
-                logger.exception("上传运行日志失败 account_id=%s", account_id)
+        except Exception:
+            logger.exception("上传运行日志失败 account_id=%s", account_id)

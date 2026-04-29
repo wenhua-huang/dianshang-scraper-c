@@ -5,7 +5,7 @@ from dataclasses import asdict
 from typing import Any
 from urllib import error, parse, request
 
-from scraper_client.domain.models import ShopAccountInfo, UploadResultCounts
+from scraper_client.domain.models import ShopAccountInfo, UploadAftersaleCounts, UploadResultCounts
 
 
 class InternalApiClient:
@@ -66,6 +66,25 @@ class InternalApiClient:
             "log_data": log_data,
         }
         return self._request_json("POST", "/internal/scraper/logs/upload", payload)
+
+    def upload_aftersales(
+        self,
+        *,
+        round_no: int,
+        platform: str,
+        shop_account_id: int,
+        client_id: str,
+        aftersales: list[dict[str, Any]],
+    ) -> UploadAftersaleCounts:
+        payload = {
+            "round_no": round_no,
+            "platform": platform,
+            "shop_account_id": shop_account_id,
+            "client_id": client_id,
+            "aftersales": aftersales,
+        }
+        data = self._request_json("POST", "/internal/scraper/aftersales/upload", payload)
+        return UploadAftersaleCounts(**data)
 
     def get_task(self) -> dict[str, Any] | None:
         """Fetch next available task from backend.
