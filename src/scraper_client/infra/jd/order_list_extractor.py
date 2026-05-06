@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 from typing import Any, Callable
 
+from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import Page, Response
 
 from scraper_client.infra.jd.exceptions import JDSessionExpiredError
@@ -77,7 +78,20 @@ class JDOrderListExtractor:
         page.on("response", _on_response)
 
         logger.info("打开订单列表页 url=%s", _ORDER_LIST_ALL_URL)
-        page.goto(_ORDER_LIST_ALL_URL, wait_until="domcontentloaded", timeout=90_000)
+        try:
+            page.goto(_ORDER_LIST_ALL_URL, wait_until="domcontentloaded", timeout=90_000)
+        except PlaywrightError as exc:
+            err_msg = str(exc)
+            if "interrupted by another navigation" in err_msg and "login" in err_msg.lower():
+                logger.warning(
+                    "订单列表页导航被登录跳转中断，Session 已过期 current_url=%s err=%s",
+                    page.url,
+                    err_msg[:200],
+                )
+                raise JDSessionExpiredError(
+                    f"navigation to order list interrupted by login redirect: {err_msg}"
+                ) from exc
+            raise
         if self._is_login_redirect_or_page(page):
             raise JDSessionExpiredError("redirected to login page when opening JD order list")
 

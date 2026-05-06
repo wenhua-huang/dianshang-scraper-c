@@ -6,6 +6,7 @@ import re
 import time
 from typing import Any, Callable
 
+from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import Page, Response
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
@@ -105,6 +106,22 @@ class JDAftersaleListExtractor:
                 int((time.monotonic() - nav_start) * 1000),
                 page.url,
             )
+        except PlaywrightError as exc:
+            # JD redirects to the login page before domcontentloaded fires when the session
+            # is already invalid. Playwright surfaces this as "Navigation ... interrupted by
+            # another navigation to passport.shop.jd.com/login/...".  Convert it so the
+            # reauth-retry wrapper in jd_scraper.py can handle it properly.
+            err_msg = str(exc)
+            if "interrupted by another navigation" in err_msg and "login" in err_msg.lower():
+                logger.warning(
+                    "售后列表页导航被登录跳转中断，Session 已过期 current_url=%s err=%s",
+                    page.url,
+                    err_msg[:200],
+                )
+                raise JDSessionExpiredError(
+                    f"navigation to aftersale list interrupted by login redirect: {err_msg}"
+                ) from exc
+            raise
 
         if _AFTERSALE_PAGE_PATH_HINT not in (page.url or ""):
             logger.warning("售后列表页URL未命中预期路径 current_url=%s", page.url)

@@ -59,6 +59,7 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO")
 
     scraper_server_base_url: str = Field(default="http://127.0.0.1:8000/api/v1")
+    scraper_frontend_base_url: str = Field(default="")
     scraper_internal_api_key: str = Field(default="change-me-scraper-key")
     scraper_client_id: str = Field(default="scraper-client-local")
 
@@ -77,10 +78,13 @@ class Settings(BaseSettings):
     smtp_username: str = Field(default="")
     smtp_password: str = Field(default="")
     smtp_from: str = Field(default="")
+    smtp_to: str = Field(default="")
     captcha_alert_cooldown_seconds: int = Field(default=600, ge=0)
 
     verification_poll_interval_seconds: float = Field(default=3.0, ge=0.5)
     verification_max_wait_seconds: int = Field(default=180, ge=10)
+    sms_flow_cooldown_seconds: int = Field(default=90, ge=0)
+    sms_flow_max_duration_seconds: int = Field(default=600, ge=60)
 
     def validate(self) -> None:
         if self.retry_backoff_max_seconds < self.empty_queue_backoff_seconds:

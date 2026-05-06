@@ -6,6 +6,7 @@ import ssl
 import time
 from email.mime.text import MIMEText
 from typing import Any
+from urllib.parse import urlsplit
 
 from playwright.sync_api import Page
 
@@ -52,6 +53,15 @@ _SMS_VERIFICATION_SELECTORS = [
 ]
 _SMS_VERIFICATION_TEXT = ["短信验证码", "手机验证码", "获取验证码"]
 
+# 账号密码不匹配提示特征
+_CREDENTIAL_MISMATCH_TEXT = [
+    "账号名与密码不匹配，请重新输入",
+    "账号名与密码不匹配",
+    "用户名或密码不正确",
+    "账号或密码错误",
+    "密码错误",
+]
+
 
 class JDAuthenticator:
     """Ensure JD account has a valid authenticated browser session."""
@@ -64,6 +74,10 @@ class JDAuthenticator:
             api_key=self._settings.scraper_internal_api_key,
         )
         self._last_email_sent_at: dict[str, float] = {}
+        self._last_sms_flow_attempt_at: dict[int, float] = {}
+        self._sms_flow_started_at: dict[int, float] = {}
+        self._sms_flow_abandoned: set[int] = set()
+        self._sms_flow_abandon_notified: set[int] = set()
 
     def ensure_authenticated(
         self,
@@ -157,6 +171,7 @@ class JDAuthenticator:
 
         deadline = time.time() + max(30, int(wait_timeout_seconds))
         while time.time() < deadline:
+            self._raise_on_credential_mismatch(page, account=account)
             if not self._is_login_required(page):
                 page.goto(JD_ORDER_LIST_URL, wait_until="domcontentloaded", timeout=90_000)
                 if not self._is_login_required(page) and self._is_order_list_page(page):
@@ -248,6 +263,8 @@ class JDAuthenticator:
             logger.info("已点击登录提交按钮 account_id=%s", account.get("id"))
 
         # JD may switch into SMS verification after credential submit.
+        page.wait_for_timeout(500)
+        self._raise_on_credential_mismatch(page, account=account)
         if self._detect_sms_verification(page):
             logger.warning("提交登录后检测到短信验证码 account_id=%s", account.get("id"))
             if not self._handle_sms_verification(page, account=account):
@@ -257,6 +274,7 @@ class JDAuthenticator:
         deadline = time.time() + max(20, int(wait_timeout_seconds))
         while time.time() < deadline:
             page.wait_for_timeout(1500)
+            self._raise_on_credential_mismatch(page, account=account)
             self._handle_verification_if_present(page, account=account)
             if not self._is_login_required(page):
                 page.goto(JD_ORDER_LIST_URL, wait_until="domcontentloaded", timeout=90_000)
@@ -321,6 +339,7 @@ class JDAuthenticator:
             return False
 
         logger.info("验证码会话已创建 account_id=%s request_id=%s", account_id, request_id)
+        self._send_sms_verification_link_email(account=account, session=session)
         deadline = time.time() + int(self._settings.verification_max_wait_seconds)
         poll_seconds = float(self._settings.verification_poll_interval_seconds)
 
@@ -394,19 +413,106 @@ class JDAuthenticator:
         return False
 
     def _trigger_sms_send(self, page: Page) -> bool:
+        # 某些认证页需要先点击“使用手机短信验证码”切换认证方式。
+        switch_selectors = [
+            "button:has-text('使用 手机短信验证码')",
+            "button:has-text('使用手机短信验证码')",
+            "button:has-text('手机短信验证码')",
+            "text=使用 手机短信验证码",
+            "text=使用手机短信验证码",
+            ".tip-btnbox button",
+            "button.btn-def.btn-xl.mb20",
+        ]
+        switched = self._click_login_submit(page, switch_selectors)
+        if switched:
+            logger.info("已切换到短信验证码认证方式")
+            page.wait_for_timeout(500)
+
         selectors = [
             "button:has-text('发送验证码')",
             "button:has-text('获取验证码')",
+            "button:has-text('获取短信验证码')",
+            "button:has-text('发送短信验证码')",
             "button:has-text('发送短信')",
             "button:has-text('获取短信')",
+            "button:has-text('重新发送')",
+            "button:has-text('重新获取')",
+            "a:has-text('获取验证码')",
+            "a:has-text('发送验证码')",
+            "a:has-text('重新发送')",
+            "span:has-text('获取验证码')",
+            "span:has-text('发送验证码')",
+            "span:has-text('发送短信验证码')",
+            "div:has-text('获取验证码')",
+            "div:has-text('发送验证码')",
             "text=获取验证码",
             "text=发送验证码",
+            "text=获取短信验证码",
+            "text=发送短信验证码",
+            "text=重新发送",
             "[class*='get-code']",
             "[class*='getCode']",
             "[class*='send-code']",
             "[class*='sendCode']",
+            "[class*='fetch-code']",
+            "[class*='fetchCode']",
+            "[class*='sms']",
+            "[class*='verify']",
+            "[id*='sendCode']",
+            "[id*='getCode']",
         ]
-        return self._click_first_available(page, selectors)
+        return self._click_login_submit(page, selectors)
+
+    def _build_verification_link(self, session: dict[str, Any]) -> str:
+        verify_token = str(session.get("verify_token") or "").strip()
+        if not verify_token:
+            return ""
+
+        frontend_base_url = str(self._settings.scraper_frontend_base_url or "").strip()
+        if not frontend_base_url:
+            parsed = urlsplit(self._settings.scraper_server_base_url)
+            if parsed.scheme and parsed.netloc:
+                frontend_base_url = f"{parsed.scheme}://{parsed.netloc}"
+
+        if not frontend_base_url:
+            return ""
+
+        return f"{frontend_base_url.rstrip('/')}/verify-code/{verify_token}"
+
+    def _send_sms_verification_link_email(
+        self,
+        *,
+        account: dict[str, Any],
+        session: dict[str, Any],
+    ) -> None:
+        to = self._resolve_notification_recipient(account)
+        if not to:
+            return
+
+        account_email = str(account.get("email") or "").strip()
+        if account_email and to == account_email:
+            return
+
+        verify_link = self._build_verification_link(session)
+        if not verify_link:
+            logger.warning(
+                "验证码会话缺少 verify_token，无法发送链接邮件 account_id=%s request_id=%s",
+                account.get("id"),
+                session.get("request_id"),
+            )
+            return
+
+        self._send_email_notification(
+            to=to,
+            subject=f"[京东登录] 验证码填写链接 — {account.get('account_name')}",
+            body=(
+                f"账号 {account.get('account_name')} 已创建短信验证码会话。\n\n"
+                "请点击下面的链接填写收到的正式验证码：\n"
+                f"{verify_link}\n\n"
+                f"请求 ID: {session.get('request_id')}\n"
+                f"账号 ID: {account.get('id')}"
+            ),
+        )
 
     @staticmethod
     def _submit_code_to_page(page: Page, code: str) -> bool:
@@ -576,7 +682,7 @@ class JDAuthenticator:
                 account.get("id"),
                 account.get("account_name"),
             )
-            to = str(account.get("email") or "").strip()
+            to = self._resolve_notification_recipient(account)
             if to:
                 logger.info(
                     "发送行为验证码提醒邮件 account_id=%s to=%s",
@@ -593,12 +699,35 @@ class JDAuthenticator:
                     ),
                 )
         elif self._detect_sms_verification(page):
+            flow_result = self._run_sms_flow_with_throttle(page, account=account)
+            if flow_result == "handled":
+                return
+
+            if flow_result == "cooldown":
+                # 冷却中：降级为 debug，避免日志刷屏
+                logger.debug(
+                    "短信验证码等待用户填写中（冷却中）account_id=%s account_name=%s",
+                    account.get("id"),
+                    account.get("account_name"),
+                )
+                return
+
+            if flow_result == "abandoned":
+                logger.debug(
+                    "短信验证码流程已放弃，等待下一轮任务 account_id=%s account_name=%s",
+                    account.get("id"),
+                    account.get("account_name"),
+                )
+                return
+
+            # flow_result in {"failed", "skip"} — 需要提醒
             logger.warning(
-                "检测到需要输入短信验证码 account_id=%s account_name=%s",
+                "检测到需要输入短信验证码（自动流程未成功 result=%s）account_id=%s account_name=%s",
+                flow_result,
                 account.get("id"),
                 account.get("account_name"),
             )
-            to = str(account.get("email") or "").strip()
+            to = self._resolve_notification_recipient(account)
             if to:
                 logger.info(
                     "发送短信验证码提醒邮件 account_id=%s to=%s",
@@ -610,10 +739,124 @@ class JDAuthenticator:
                     subject=f"[京东登录] 需要输入短信验证码 — {account.get('account_name')}",
                     body=(
                         f"账号 {account.get('account_name')} 在登录京东商家后台时需要输入短信验证码，"
-                        "请查收手机短信并在 Chrome 浏览器中填写验证码。\n\n"
+                        "系统已尝试自动触发验证码会话并等待用户在邮件链接中提交验证码。"
+                        "若仍未通过，请查收手机短信并在 Chrome 浏览器中填写验证码。\n\n"
                         f"账号 ID: {account.get('id')}"
                     ),
                 )
+
+    def _resolve_notification_recipient(self, account: dict[str, Any]) -> str:
+        account_email = str(account.get("email") or "").strip()
+        if account_email:
+            return account_email
+        return str(self._settings.smtp_to or "").strip()
+
+    def _run_sms_flow_with_throttle(self, page: Page, *, account: dict[str, Any]) -> str:
+        account_id = int(account.get("id") or 0)
+        if account_id <= 0:
+            return "skip"
+
+        now = time.time()
+        if account_id in self._sms_flow_abandoned:
+            logger.debug("短信验证码流程已放弃 account_id=%s", account_id)
+            self._notify_sms_flow_abandoned(account)
+            return "abandoned"
+
+        started_at = self._sms_flow_started_at.get(account_id)
+        if started_at is None:
+            self._sms_flow_started_at[account_id] = now
+            started_at = now
+
+        max_duration = max(60, int(self._settings.sms_flow_max_duration_seconds))
+        if now - started_at > max_duration:
+            self._sms_flow_abandoned.add(account_id)
+            logger.warning(
+                "短信验证码流程超过最长持续时间，停止自动处理 account_id=%s max_duration_seconds=%s",
+                account_id,
+                max_duration,
+            )
+            self._notify_sms_flow_abandoned(account)
+            return "abandoned"
+
+        cooldown = max(0, int(self._settings.sms_flow_cooldown_seconds))
+        last_attempt = self._last_sms_flow_attempt_at.get(account_id)
+        if last_attempt is not None and now - last_attempt < cooldown:
+            logger.debug(
+                "短信验证码流程处于冷却中 account_id=%s cooldown_seconds=%s remaining=%.1fs",
+                account_id,
+                cooldown,
+                cooldown - (now - last_attempt),
+            )
+            return "cooldown"
+
+        self._last_sms_flow_attempt_at[account_id] = now
+        if self._handle_sms_verification(page, account=account):
+            self._last_sms_flow_attempt_at.pop(account_id, None)
+            self._sms_flow_started_at.pop(account_id, None)
+            self._sms_flow_abandoned.discard(account_id)
+            self._sms_flow_abandon_notified.discard(account_id)
+            return "handled"
+
+        return "failed"
+
+    def _notify_sms_flow_abandoned(self, account: dict[str, Any]) -> None:
+        account_id = int(account.get("id") or 0)
+        if account_id <= 0:
+            return
+        if account_id in self._sms_flow_abandon_notified:
+            return
+
+        to = self._resolve_notification_recipient(account)
+        if not to:
+            return
+
+        self._send_email_notification(
+            to=to,
+            subject=f"[京东登录] 短信验证码自动处理已放弃 — {account.get('account_name')}",
+            body=(
+                f"账号 {account.get('account_name')} 的短信验证码自动处理已超过 "
+                f"{int(self._settings.sms_flow_max_duration_seconds)} 秒，"
+                "已放弃自动处理，下一轮会继续爬取。\n\n"
+                f"账号 ID: {account_id}"
+            ),
+        )
+        self._sms_flow_abandon_notified.add(account_id)
+
+    def _raise_on_credential_mismatch(self, page: Page, *, account: dict[str, Any]) -> None:
+        if not self._detect_credential_mismatch(page):
+            return
+
+        account_id = account.get("id")
+        account_name = account.get("account_name")
+        logger.error(
+            "检测到账号密码不匹配，终止当前任务 account_id=%s account_name=%s",
+            account_id,
+            account_name,
+        )
+
+        to = self._resolve_notification_recipient(account)
+        if to:
+            self._send_email_notification(
+                to=to,
+                subject=f"[京东登录] 账号密码不匹配，任务已失败 — {account_name}",
+                body=(
+                    f"账号 {account_name} 检测到“账号名与密码不匹配，请重新输入”，"
+                    "当前任务已直接失败，请在后台核对账号与密码后重试。\n\n"
+                    f"账号 ID: {account_id}"
+                ),
+            )
+
+        raise JDLoginError("credential mismatch: account_name and password do not match")
+
+    @staticmethod
+    def _detect_credential_mismatch(page: Page) -> bool:
+        try:
+            body_text = page.inner_text("body", timeout=2000)
+            if any(mark in body_text for mark in _CREDENTIAL_MISMATCH_TEXT):
+                return True
+        except Exception:
+            pass
+        return False
 
     @staticmethod
     def _detect_behavior_captcha(page: Page) -> bool:
