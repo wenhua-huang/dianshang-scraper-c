@@ -704,8 +704,7 @@ class JDAuthenticator:
                 return
 
             if flow_result == "cooldown":
-                # 冷却中：降级为 debug，避免日志刷屏
-                logger.debug(
+                logger.info(
                     "短信验证码等待用户填写中（冷却中）account_id=%s account_name=%s",
                     account.get("id"),
                     account.get("account_name"),
@@ -713,7 +712,7 @@ class JDAuthenticator:
                 return
 
             if flow_result == "abandoned":
-                logger.debug(
+                logger.info(
                     "短信验证码流程已放弃，等待下一轮任务 account_id=%s account_name=%s",
                     account.get("id"),
                     account.get("account_name"),
@@ -758,7 +757,7 @@ class JDAuthenticator:
 
         now = time.time()
         if account_id in self._sms_flow_abandoned:
-            logger.debug("短信验证码流程已放弃 account_id=%s", account_id)
+            logger.info("短信验证码流程已放弃 account_id=%s", account_id)
             self._notify_sms_flow_abandoned(account)
             return "abandoned"
 
@@ -781,7 +780,7 @@ class JDAuthenticator:
         cooldown = max(0, int(self._settings.sms_flow_cooldown_seconds))
         last_attempt = self._last_sms_flow_attempt_at.get(account_id)
         if last_attempt is not None and now - last_attempt < cooldown:
-            logger.debug(
+            logger.info(
                 "短信验证码流程处于冷却中 account_id=%s cooldown_seconds=%s remaining=%.1fs",
                 account_id,
                 cooldown,
