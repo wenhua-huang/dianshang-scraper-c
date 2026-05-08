@@ -88,8 +88,10 @@ jobs:
             Copy-Item -Path ".env.example" -Destination "$pkgDir/env.example" -Force
             Copy-Item -Path $targetEnvFile -Destination "$pkgDir/$targetEnvFile" -Force
             Copy-Item -Path $targetEnvFile -Destination "$pkgDir/env.$target" -Force
-            Set-Content -Path "$pkgDir/.package-env" -Value $target -NoNewline
-            Set-Content -Path "$pkgDir/package-env" -Value $target -NoNewline
+            Copy-Item -Path $targetEnvFile -Destination "$pkgDir/.env" -Force
+            Copy-Item -Path $targetEnvFile -Destination "$pkgDir/env" -Force
+            Set-Content -Path "$pkgDir/.package-env" -Value $target -NoNewline -Encoding utf8
+            Set-Content -Path "$pkgDir/package-env" -Value $target -NoNewline -Encoding utf8
           }
 
       - name: Smoke check

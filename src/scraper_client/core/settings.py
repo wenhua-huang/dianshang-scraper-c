@@ -62,6 +62,7 @@ class Settings(BaseSettings):
     scraper_frontend_base_url: str = Field(default="")
     scraper_internal_api_key: str = Field(default="change-me-scraper-key")
     scraper_client_id: str = Field(default="scraper-client-local")
+    scraper_verify_ssl: bool = Field(default=True)
 
     playwright_cdp_url: str = Field(default="http://127.0.0.1:9222")
     playwright_timeout_ms: int = Field(default=20000)

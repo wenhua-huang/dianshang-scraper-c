@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import ssl
-from dataclasses import asdict
 from typing import Any
 from urllib import error, parse, request
 
@@ -12,10 +11,17 @@ from scraper_client.domain.models import ShopAccountInfo, UploadAftersaleCounts,
 
 
 class InternalApiClient:
-    def __init__(self, base_url: str, api_key: str, timeout: int = 20) -> None:
+    def __init__(
+        self,
+        base_url: str,
+        api_key: str,
+        timeout: int = 20,
+        verify_ssl: bool = True,
+    ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.timeout = timeout
+        self.verify_ssl = verify_ssl
 
     def list_accounts(self, platform: str | None = None) -> list[ShopAccountInfo]:
         query = {"platform": platform} if platform else None
@@ -131,7 +137,10 @@ class InternalApiClient:
         req.add_header("X-Scraper-Key", self.api_key)
 
         try:
-            ssl_ctx = ssl.create_default_context(cafile=certifi.where())
+            if self.verify_ssl:
+                ssl_ctx = ssl.create_default_context(cafile=certifi.where())
+            else:
+                ssl_ctx = ssl._create_unverified_context()
             with request.urlopen(req, context=ssl_ctx, timeout=self.timeout) as resp:
                 text = resp.read().decode("utf-8")
         except error.HTTPError as exc:

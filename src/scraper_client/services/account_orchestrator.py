@@ -24,6 +24,7 @@ class AccountOrchestrator:
         self.api_client = InternalApiClient(
             base_url=settings.scraper_server_base_url,
             api_key=settings.scraper_internal_api_key,
+            verify_ssl=settings.scraper_verify_ssl,
         )
         self.executor = ScrapeExecutor(settings)
         self.result_uploader = ResultUploader(self.api_client)
