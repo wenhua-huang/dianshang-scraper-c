@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import json
+import ssl
 from dataclasses import asdict
 from typing import Any
 from urllib import error, parse, request
+
+import certifi
 
 from scraper_client.domain.models import ShopAccountInfo, UploadAftersaleCounts, UploadResultCounts
 
@@ -128,7 +131,8 @@ class InternalApiClient:
         req.add_header("X-Scraper-Key", self.api_key)
 
         try:
-            with request.urlopen(req, timeout=self.timeout) as resp:
+            ssl_ctx = ssl.create_default_context(cafile=certifi.where())
+            with request.urlopen(req, context=ssl_ctx, timeout=self.timeout) as resp:
                 text = resp.read().decode("utf-8")
         except error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="ignore")

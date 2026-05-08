@@ -1,16 +1,23 @@
 # -*- mode: python ; coding: utf-8 -*-
-from PyInstaller.utils.hooks import copy_metadata
+from PyInstaller.utils.hooks import copy_metadata, collect_all
 
 datas = []
+binaries = []
+hiddenimports = []
+
 datas += copy_metadata('dianshang-scraper-c')
+_certifi_d, _certifi_b, _certifi_h = collect_all('certifi')
+datas += _certifi_d
+binaries += _certifi_b
+hiddenimports += _certifi_h
 
 
 a = Analysis(
     ['src\\scraper_client\\app\\main.py'],
     pathex=[],
-    binaries=[],
+    binaries=binaries,
     datas=datas,
-    hiddenimports=[],
+    hiddenimports=hiddenimports + ['certifi'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
