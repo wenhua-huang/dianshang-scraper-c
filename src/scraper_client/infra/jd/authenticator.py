@@ -74,6 +74,7 @@ class JDAuthenticator:
             api_key=self._settings.scraper_internal_api_key,
         )
         self._last_email_sent_at: dict[str, float] = {}
+        self._latest_sms_verification_session: dict[int, dict[str, Any]] = {}
         self._last_sms_flow_attempt_at: dict[int, float] = {}
         self._sms_flow_started_at: dict[int, float] = {}
         self._sms_flow_abandoned: set[int] = set()
@@ -338,8 +339,10 @@ class JDAuthenticator:
             logger.warning("验证码会话缺少 request_id account_id=%s", account_id)
             return False
 
+        self._latest_sms_verification_session[account_id] = session
         logger.info("验证码会话已创建 account_id=%s request_id=%s", account_id, request_id)
-        self._send_sms_verification_link_email(account=account, session=session)
+        # 链接邮件统一由后端 create_verification_session 发送，抓取端不再重复发送，
+        # 避免账号未配置 email 时落到 smtp_to 上出现两封等价邮件。
         deadline = time.time() + int(self._settings.verification_max_wait_seconds)
         poll_seconds = float(self._settings.verification_poll_interval_seconds)
 
@@ -513,6 +516,30 @@ class JDAuthenticator:
                 f"账号 ID: {account.get('id')}"
             ),
         )
+
+    def _build_sms_verification_fallback_body(self, account: dict[str, Any]) -> str:
+        body = (
+            f"账号 {account.get('account_name')} 在登录京东商家后台时需要输入短信验证码，"
+            "系统已尝试自动触发验证码会话并等待用户提交验证码。"
+        )
+
+        account_id = int(account.get("id") or 0)
+        session = self._latest_sms_verification_session.get(account_id, {})
+        verify_link = self._build_verification_link(session)
+        request_id = str(session.get("request_id") or "").strip()
+
+        if verify_link:
+            body += f"\n\n验证码填写链接：\n{verify_link}"
+            if request_id:
+                body += f"\n\n请求 ID: {request_id}"
+        else:
+            body += "\n\n系统当前未拿到可用的验证码填写链接。"
+
+        body += (
+            "\n\n若仍未通过，请查收手机短信并在 Chrome 浏览器中填写验证码。"
+            f"\n\n账号 ID: {account.get('id')}"
+        )
+        return body
 
     @staticmethod
     def _submit_code_to_page(page: Page, code: str) -> bool:
@@ -736,12 +763,7 @@ class JDAuthenticator:
                 self._send_email_notification(
                     to=to,
                     subject=f"[京东登录] 需要输入短信验证码 — {account.get('account_name')}",
-                    body=(
-                        f"账号 {account.get('account_name')} 在登录京东商家后台时需要输入短信验证码，"
-                        "系统已尝试自动触发验证码会话并等待用户在邮件链接中提交验证码。"
-                        "若仍未通过，请查收手机短信并在 Chrome 浏览器中填写验证码。\n\n"
-                        f"账号 ID: {account.get('id')}"
-                    ),
+                    body=self._build_sms_verification_fallback_body(account),
                 )
 
     def _resolve_notification_recipient(self, account: dict[str, Any]) -> str:
@@ -791,6 +813,7 @@ class JDAuthenticator:
         self._last_sms_flow_attempt_at[account_id] = now
         if self._handle_sms_verification(page, account=account):
             self._last_sms_flow_attempt_at.pop(account_id, None)
+            self._latest_sms_verification_session.pop(account_id, None)
             self._sms_flow_started_at.pop(account_id, None)
             self._sms_flow_abandoned.discard(account_id)
             self._sms_flow_abandon_notified.discard(account_id)
