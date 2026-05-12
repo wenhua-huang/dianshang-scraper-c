@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dianshang-scraper-c"
-version = "1.0.7"
+version = "1.0.10"
 description = "E-commerce scraper client (CDP-only, server-managed rounds)"
 requires-python = ">=3.11"
 dependencies = [
