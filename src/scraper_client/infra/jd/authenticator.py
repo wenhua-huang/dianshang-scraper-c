@@ -72,6 +72,7 @@ class JDAuthenticator:
         self._api_client = InternalApiClient(
             base_url=self._settings.scraper_server_base_url,
             api_key=self._settings.scraper_internal_api_key,
+            verify_ssl=self._settings.scraper_verify_ssl,
         )
         self._last_email_sent_at: dict[str, float] = {}
         self._latest_sms_verification_session: dict[int, dict[str, Any]] = {}
